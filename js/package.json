@@ -1,0 +1,17 @@
+{
+  "name": "weex-plugin-svg",
+  "version": "0.0.0",
+  "description": "Weex Plugin-weex-plugin-svg",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Weex",
+    "Plugin",
+    "commponent",
+    "module",
+    "handle",
+    "weexpack"
+  ],
+  "author": ""
+}

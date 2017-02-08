@@ -1,0 +1,41 @@
+<template>
+  <div class="page">
+    <image class="logo" src="http://img1.vued.vanthink.cn/vued0366b8d467968db7b4e9055288972c4e.png"></image>
+    <a href="https://www.npmjs.com/package/weex-plugin-svg">Github</a>
+    <p>SVG</p>
+    <div class="item">
+      <svg width="100" height="100"></svg>
+    </div>
+    
+    
+  </div>
+</template>
+
+<style>
+  .page{
+    flex: 1;
+    padding-top: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo{
+    width: 240px;
+    height: 120px;
+  }
+  .item{
+    width: 400px;
+    height: 400px;
+    margin: 20px auto;
+    border:1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  }
+</style>
+
+<script>
+ // require('../web/index');
+  module.exports = {
+     
+    
+  };
+</script>
