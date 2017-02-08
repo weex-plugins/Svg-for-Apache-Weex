@@ -1,11 +1,6 @@
 <template>
   <div class="page">
     <image class="logo" src="http://img1.vued.vanthink.cn/vued0366b8d467968db7b4e9055288972c4e.png"></image>
-    <a href="https://www.npmjs.com/package/weex-plugin-svg">Github</a>
-    <p>SVG</p>
-    <div class="item">
-      <svg width="100" height="100"></svg>
-    </div>
     <p>rect</p>
     <div class="item">
       <svg width="300" height="300">
@@ -37,9 +32,52 @@
     <p>polygon</p>
     <div class="item">
       <svg width="200" height="200">
-         <polygon  points="0,30 50,0 70,30 70,60 50,80 0,60" />           
-    </svg>
-  </div>
+        <polygon  points="0,30 50,0 70,30 70,60 50,80 0,60" />           
+      </svg>
+    </div>
+    <p>path</p>
+    <div class="item">
+      <svg width="200" height="200">
+          <path d="M50,50 A50,50 0 0,1 150,80" style="stroke:#e84c3d;fill:none;" />           
+      </svg>
+    </div>
+    <p>text</p>
+    <div class="item">
+      <svg width="200" height="200">
+        <text x="20"  y="40">Example SVG text 1</text>          
+      </svg>
+    </div>
+    <p>linear gradient</p>
+    <div class="item">
+      <svg width="200" height="200">
+        <defs>
+          <linearGradient id="myLinearGradient1"
+                          x1="0%" y1="0%"
+                          x2="0%" y2="100%"
+                          spreadMethod="pad">
+            <stop offset="0%"   stop-color="#3498db" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#2980b9" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+
+        <rect x="10" y="10" width="75" height="100" rx="10" ry="10"
+           style="fill:url(#myLinearGradient1);" />          
+      </svg>
+    </div>
+    <p>radial gradient</p>
+    <div class="item">
+      <svg width="200" height="200">
+        <defs>
+          <radialGradient id="myRadialGradient4"
+             fx="5%" fy="5%" r="65%"
+             spreadMethod="pad">
+            <stop offset="0%"   stop-color="#9b59b6" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#8e44ad" stop-opacity="1" />
+          </radialGradient>
+        </defs>
+        <rect x="20" y="10" width="100" height="100" rx="10" ry="10" fill="url(#myRadialGradient4)" />         
+      </svg>
+    </div>
   </div>
    
 </template>
@@ -58,13 +96,14 @@
   }
   .item{
     width: 400px;
-    height: 400px;
+    height: 300px;
     margin: 20px auto;
-    border:1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0,0,0,.2);
   }
   svg{
     margin-top: 20px;
+  }
+  p{
+    text-align: left;
   }
 </style>
 
