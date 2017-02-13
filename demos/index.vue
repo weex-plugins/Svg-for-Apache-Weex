@@ -87,7 +87,7 @@
         <circle cx="150" cy="50" r="45" style="fill:#2ecc71;"/>  
       </svg>
     </div>
-    <p>stroke props</p>
+    <p>stroke props </p>
     <div class="item">
       <svg width="200" height="200">
         <circle cx="50" cy="50" r="20" fill="none" stroke="#ea6153"/>
@@ -130,4 +130,6 @@
      
     
   };
+  
+  
 </script>
