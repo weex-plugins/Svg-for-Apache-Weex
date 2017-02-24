@@ -1,6 +1,6 @@
 # weex-plugin-svg
 
-<img src="./screenshots/weex-plugin-svg-icon.png" width="240" />
+<img src="http://img1.vued.vanthink.cn/vueda74362438071729b7df40a277a2d5a17.png" width="240" />
 
 a weex plugin to support svg for Web/iOS/Andoid
 
