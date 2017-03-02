@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -27,5 +27,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.google.code.findbugs:jsr305:3.0.0'
+    compile 'com.taobao.android:weex_sdk:0.10.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.alibaba:fastjson:1.1.46.android'
 }

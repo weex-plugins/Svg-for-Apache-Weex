@@ -1,5 +1,6 @@
 package com.alibaba.weex.svg;
 
+import android.graphics.Color;
 import android.graphics.Path;
 import android.util.Log;
 
@@ -145,7 +146,7 @@ public class SvgParser {
     return pathCmds;
   }
 
-  public static ArrayList<PathCmd> parsePoly(String s) {
+  public static ArrayList<PathCmd> parsePoints(String s) {
     ArrayList<PathCmd> pathCmds = new ArrayList<>();
     int n = s.length();
     ParserHelper ph = new ParserHelper(s, 0);
@@ -384,5 +385,41 @@ public class SvgParser {
 
       return desp;
     }
+  }
+
+  public static Integer parseColor(String name) {
+    String v = name;
+    if (v == null) {
+      return null;
+    } else if (v.startsWith("#")) {
+      try { // #RRGGBB or #AARRGGBB
+        return Color.parseColor(v);
+      } catch (IllegalArgumentException iae) {
+        return null;
+      }
+    } else if (v.startsWith("rgb(") && v.endsWith(")")) {
+      String values[] = v.substring(4, v.length() - 1).split(",");
+      try {
+        return rgb(parseNum(values[0]), parseNum(values[1]), parseNum(values[2]));
+      } catch (NumberFormatException nfe) {
+        return null;
+      } catch (ArrayIndexOutOfBoundsException e) {
+        return null;
+      }
+    } else {
+      return SVGColors.mapColour(v);
+    }
+  }
+
+  private static int parseNum(String v) throws NumberFormatException {
+    if (v.endsWith("%")) {
+      v = v.substring(0, v.length() - 1);
+      return Math.round(Float.parseFloat(v) / 100 * 255);
+    }
+    return Integer.parseInt(v);
+  }
+
+  private static Integer rgb(int r, int g, int b) {
+    return ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
   }
 }

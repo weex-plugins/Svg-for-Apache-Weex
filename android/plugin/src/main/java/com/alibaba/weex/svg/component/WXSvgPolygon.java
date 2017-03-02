@@ -24,8 +24,8 @@ public class WXSvgPolygon extends WXSvgPath {
 
   @WXComponentProp(name = "points")
   public void setPoints(@Nullable String points) {
-    mD = SvgParser.parsePoly(points);
-    Log.v(TAG, "svg point is " + SvgParser.parsePoly(points));
+    mD = SvgParser.parsePoints(points);
+    Log.v(TAG, "svg point is " + SvgParser.parsePoints(points));
     setupPath();
   }
 

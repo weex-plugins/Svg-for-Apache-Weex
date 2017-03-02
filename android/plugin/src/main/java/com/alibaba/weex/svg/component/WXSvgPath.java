@@ -10,17 +10,12 @@ import android.util.Log;
 
 import com.alibaba.weex.svg.PropHelper;
 import com.alibaba.weex.svg.SvgParser;
-import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
-import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.WritableArray;
-import com.facebook.react.bridge.WritableNativeArray;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponentProp;
 import com.taobao.weex.ui.component.WXVContainer;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -56,10 +51,12 @@ public class WXSvgPath extends WXSvgAbsComponent {
   protected Path mPath;
   protected ArrayList<SvgParser.PathCmd> mD;
   //private float[] mD;
-  protected ReadableArray mPropList;// = new WritableNativeArray();
-  protected WritableArray mOwnedPropList;// = new WritableNativeArray();
+//  protected ReadableArray mPropList;// = new WritableNativeArray();
+//  protected WritableArray mOwnedPropList;// = new WritableNativeArray();
   JSONArray mFill = new JSONArray();
+  private String mFillColor;
   JSONArray mStroke = new JSONArray();
+  private String mStrokeColor;
   float[] mStrokeDasharray;
   private boolean mFillRuleSet = true;
   private ArrayList<String> mChangedList;
@@ -69,55 +66,12 @@ public class WXSvgPath extends WXSvgAbsComponent {
     super(instance, dom, parent);
   }
 
-//  public void parseFromJson(JSONObject map) {
-//    super.parseFromJson(map);
-//    if (map != null) {
-//      JSONObject attrs = map.getJSONObject("attr");
-//      String stroke = attrs.getString("stroke");
-//      if (!TextUtils.isEmpty(stroke)) {
-//        try {
-//          mStroke.put(0, 0);
-//          mStroke.put(1, 255);
-//          mStroke.put(2, 255);
-//          mStroke.put(3, 0);
-//        } catch (JSONException e) {
-//          e.printStackTrace();
-//        }
-//
-//      }
-//
-//      String fill = attrs.getString("fill");
-//      if (!TextUtils.isEmpty(stroke)) {
-//        try {
-//          mFill = new JSONArray();
-//          mFill.put(0, 0);
-//          mFill.put(1, 255);
-//          mFill.put(2, 0);
-//          mFill.put(3, 0);
-//        } catch (JSONException e) {
-//          e.printStackTrace();
-//        }
-//      }
-//
-//    }
-//    Log.v(TAG, "WXSvgPathDomNode " + map);
-//  }
-
   @WXComponentProp(name = "d")
   public void setPath(@Nullable String shapePath) {
     mD = SvgParser.parserPath(shapePath);
     Log.v(TAG, "svg path is " + SvgParser.parserPath(shapePath));
     setupPath();
   }
-
-//  @WXComponentProp(name = "fill")
-//  public void setFill(@Nullable String fill) {
-//    try {
-//      mFill = new JSONArray(fill);
-//    } catch (JSONException e) {
-//      e.printStackTrace();
-//    }
-//  }
 
   @WXComponentProp(name = "fillOpacity")
   public void setFillOpacity(float fillOpacity) {
@@ -133,23 +87,12 @@ public class WXSvgPath extends WXSvgAbsComponent {
       case FILL_RULE_NONZERO:
         break;
       default:
-        throw new JSApplicationIllegalArgumentException(
-            "fillRule " + mFillRule + " unrecognized");
+        Log.v(TAG, "fillRule " + mFillRule + " unrecognized");
     }
 
     mFillRuleSet = true;
     setupPath();
-
   }
-
-//  @WXComponentProp(name = "stroke")
-//  public void setStroke(String strokeColors) {
-//    try {
-//      mStroke = new JSONArray(strokeColors);
-//    } catch (JSONException e) {
-//      e.printStackTrace();
-//    }
-//  }
 
   @WXComponentProp(name = "strokeOpacity")
   public void setStrokeOpacity(float strokeOpacity) {
@@ -157,17 +100,17 @@ public class WXSvgPath extends WXSvgAbsComponent {
 
   }
 
-  @WXComponentProp(name = "strokeDasharray")
-  public void setStrokeDasharray(@Nullable ReadableArray strokeDasharray) {
-
-    mStrokeDasharray = PropHelper.toFloatArray(strokeDasharray);
-    if (mStrokeDasharray != null && mStrokeDasharray.length > 0) {
-      for (int i = 0; i < mStrokeDasharray.length; i++) {
-        mStrokeDasharray[i] = mStrokeDasharray[i] * mScale;
-      }
-    }
-
-  }
+//  @WXComponentProp(name = "strokeDasharray")
+//  public void setStrokeDasharray(@Nullable ReadableArray strokeDasharray) {
+//
+//    mStrokeDasharray = PropHelper.toFloatArray(strokeDasharray);
+//    if (mStrokeDasharray != null && mStrokeDasharray.length > 0) {
+//      for (int i = 0; i < mStrokeDasharray.length; i++) {
+//        mStrokeDasharray[i] = mStrokeDasharray[i] * mScale;
+//      }
+//    }
+//
+//  }
 
   @WXComponentProp(name = "strokeDashoffset")
   public void setStrokeDashoffset(float strokeWidth) {
@@ -199,8 +142,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
         mStrokeLinecap = Paint.Cap.ROUND;
         break;
       default:
-        throw new JSApplicationIllegalArgumentException(
-            "strokeLinecap " + mStrokeLinecap + " unrecognized");
+        Log.v(TAG, "strokeLinecap " + mStrokeLinecap + " unrecognized");
     }
 
   }
@@ -218,56 +160,38 @@ public class WXSvgPath extends WXSvgAbsComponent {
         mStrokeLinejoin = Paint.Join.ROUND;
         break;
       default:
-        throw new JSApplicationIllegalArgumentException(
-            "strokeLinejoin " + mStrokeLinejoin + " unrecognized");
+        Log.v(TAG, "strokeLinejoin " + mStrokeLinejoin + " unrecognized");
     }
 
   }
 
-  @WXComponentProp(name = "proplist")
-  public void setPropList(@Nullable ReadableArray propList) {
-    WritableArray copy = new WritableNativeArray();
-    if (propList != null) {
-      for (int i = 0; i < propList.size(); i++) {
-        String fieldName = propertyNameToFieldName(propList.getString(i));
-        copy.pushString(fieldName);
-        mOwnedPropList.pushString(fieldName);
-      }
-
-    }
-
-    mPropList = copy;
-
-  }
+//  @WXComponentProp(name = "proplist")
+//  public void setPropList(@Nullable ReadableArray propList) {
+//    WritableArray copy = new WritableNativeArray();
+//    if (propList != null) {
+//      for (int i = 0; i < propList.size(); i++) {
+//        String fieldName = propertyNameToFieldName(propList.getString(i));
+//        copy.pushString(fieldName);
+//        mOwnedPropList.pushString(fieldName);
+//      }
+//
+//    }
+//
+//    mPropList = copy;
+//
+//  }
 
   @WXComponentProp(name = "stroke")
   public void setStroke(String stroke) {
     if (!TextUtils.isEmpty(stroke)) {
-      try {
-        JSONArray array = new JSONArray(stroke);
-        mStroke.put(0, array.opt(0));
-        mStroke.put(1, array.opt(1));
-        mStroke.put(2, array.opt(2));
-        mStroke.put(3, array.opt(3));
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+      mStrokeColor = stroke;
     }
   }
 
   @WXComponentProp(name = "fill")
   public void setFill(String fill) {
     if (!TextUtils.isEmpty(fill)) {
-      try {
-        JSONArray array = new JSONArray(fill);
-        // mFill = new JSONArray();
-        mFill.put(0, array.opt(0));
-        mFill.put(1, array.opt(1));
-        mFill.put(2, array.opt(2));
-        mFill.put(3, array.opt(3));
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+      mFillColor = fill;
     }
   }
 
@@ -278,8 +202,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
     if (opacity > MIN_OPACITY_FOR_DRAW) {
       int count = saveAndSetupCanvas(canvas);
       if (mPath == null) {
-        throw new JSApplicationIllegalArgumentException(
-            "Paths should have a valid path (d) prop");
+        Log.v(TAG, "Paths should have a valid path (d) prop");
       }
 
       clip(canvas, paint);
@@ -315,11 +238,12 @@ public class WXSvgPath extends WXSvgAbsComponent {
    * if the fill should be drawn, {@code false} if not.
    */
   protected boolean setupFillPaint(Paint paint, float opacity, @Nullable RectF box) {
-    if (mFill != null && mFill.length() > 0) {
+    if (!TextUtils.isEmpty(mFillColor)) {
       paint.reset();
+      //paint.setColor(SvgParser.parseColor(mFillColor));
       paint.setFlags(Paint.ANTI_ALIAS_FLAG);
       paint.setStyle(Paint.Style.FILL);
-      setupPaint(paint, opacity, mFill, box);
+      setupPaint(paint, opacity, mFillColor, box);
       return true;
     }
     return false;
@@ -331,7 +255,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
    */
   protected boolean setupStrokePaint(Paint paint, float opacity, @Nullable RectF box) {
     paint.reset();
-    if (mStrokeWidth == 0 || mStroke == null || mStroke.length() == 0) {
+    if (TextUtils.isEmpty(mStrokeColor)) {
       return false;
     }
 
@@ -341,7 +265,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
     paint.setStrokeJoin(mStrokeLinejoin);
     paint.setStrokeMiter(mStrokeMiterlimit * mScale);
     paint.setStrokeWidth(mStrokeWidth * mScale);
-    setupPaint(paint, opacity, mStroke, box);
+    setupPaint(paint, opacity, mStrokeColor, box);
 
     if (mStrokeDasharray != null && mStrokeDasharray.length > 0) {
       paint.setPathEffect(new DashPathEffect(mStrokeDasharray, mStrokeDashoffset));
@@ -362,28 +286,47 @@ public class WXSvgPath extends WXSvgAbsComponent {
     return sb.toString();
   }
 
-  private void setupPaint(Paint paint, float opacity, JSONArray colors, @Nullable RectF box) {
-    int colorType = colors.optInt(0);
-    if (colorType == 0) {
-      // solid color
-      paint.setARGB(
-          (int) (colors.length() > 4 ? colors.optDouble(4) * opacity * 255 : opacity * 255),
-          (int) (colors.optDouble(1) * 255),
-          (int) (colors.optDouble(2) * 255),
-          (int) (colors.optDouble(3) * 255));
-    } else if (colorType == 1) {
-      if (box == null) {
-        box = new RectF();
-        mPath.computeBounds(box, true);
+  private void setupPaint(Paint paint, float opacity, String colors, @Nullable RectF box) {
+    if (!TextUtils.isEmpty(colors)) {
+      if (!colors.startsWith("url")) {
+        Integer color = SvgParser.parseColor(colors);
+        if (color != null) {
+          paint.setColor(color);
+        }
+      } else {
+        if (box == null) {
+          box = new RectF();
+          mPath.computeBounds(box, true);
+        }
+        String key = colors.substring(colors.indexOf("#") + 1, colors.lastIndexOf(")"));
+        PropHelper.RNSVGBrush brush = getSvgComponent().getDefinedBrush(key);
+        if (brush != null) {
+          brush.setupPaint(paint, box, mScale, opacity);
+        }
       }
-      PropHelper.RNSVGBrush brush = getSvgComponent().getDefinedBrush(colors.optString(1));
-      if (brush != null) {
-        brush.setupPaint(paint, box, mScale, opacity);
-      }
-    } else {
-      // TODO: Support pattern.
-      Log.w(TAG, "RNSVG: Color type " + colorType + " not supported!");
     }
+
+//    int colorType = colors.optInt(0);
+//    if (colorType == 0) {
+      // solid color
+//      paint.setARGB(
+//          (int) (colors.length() > 4 ? colors.optDouble(4) * opacity * 255 : opacity * 255),
+//          (int) (colors.optDouble(1) * 255),
+//          (int) (colors.optDouble(2) * 255),
+////          (int) (colors.optDouble(3) * 255));
+//    } else if (colorType == 1) {
+//      if (box == null) {
+//        box = new RectF();
+//        mPath.computeBounds(box, true);
+//      }
+//      PropHelper.RNSVGBrush brush = getSvgComponent().getDefinedBrush(colors.optString(1));
+//      if (brush != null) {
+//        brush.setupPaint(paint, box, mScale, opacity);
+//      }
+//    } else {
+//      // TODO: Support pattern.
+//      Log.w(TAG, "RNSVG: Color type " + colorType + " not supported!");
+//    }
 
   }
 
