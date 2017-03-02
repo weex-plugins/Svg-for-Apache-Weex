@@ -20,9 +20,11 @@ import android.support.annotation.NonNull;
 
 import com.alibaba.weex.svg.ISvgDrawable;
 import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.SvgParser;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
 import com.facebook.react.bridge.ReadableArray;
 import com.taobao.weex.WXSDKInstance;
+import com.taobao.weex.common.Constants;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXComponentProp;
@@ -30,6 +32,8 @@ import com.taobao.weex.ui.component.WXDiv;
 import com.taobao.weex.ui.component.WXVContainer;
 import com.taobao.weex.ui.view.WXFrameLayout;
 import com.taobao.weex.utils.WXViewUtils;
+
+import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
@@ -39,34 +43,31 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
 
   private static final float[] sMatrixData = new float[9];
   private static final float[] sRawMatrix = new float[9];
+  private static final String PATH_TYPE_CLOSE = "Z";
+  private static final String PATH_TYPE_CURVETO = "C";
+  private static final String PATH_TYPE_LINETO = "L";
+  private static final String PATH_TYPE_MOVETO = "M";
+  private static final int CLIP_RULE_EVENODD = 0;
+  private static final int CLIP_RULE_NONZERO = 1;
+  protected final float mScale;// = 1.0f;
   protected float mOpacity = 1f;
   protected Matrix mMatrix = new Matrix();
-
   protected
   @Nullable
   Path mClipPath;
   protected
   @Nullable
   String mClipPathRef;
-  private static final int PATH_TYPE_CLOSE = 1;
-  private static final int PATH_TYPE_CURVETO = 3;
-  private static final int PATH_TYPE_LINETO = 2;
-  private static final int PATH_TYPE_MOVETO = 0;
-
-  private static final int CLIP_RULE_EVENODD = 0;
-  private static final int CLIP_RULE_NONZERO = 1;
-  protected final float mScale;// = 1.0f;
-  private float[] mClipData;
-  private int mClipRule = CLIP_RULE_NONZERO;
-  private boolean mClipRuleSet;
-  private boolean mClipDataSet;
   protected boolean mResponsible = false;
   protected int mCanvasX;
   protected int mCanvasY;
   protected int mCanvasWidth;
   protected int mCanvasHeight;
   protected String mName;
-
+  private ArrayList<SvgParser.PathCmd> mClipData;
+  private int mClipRule = CLIP_RULE_NONZERO;
+  private boolean mClipRuleSet;
+  private boolean mClipDataSet;
   private WXSvgContainer mSvgShadowNode;
 
   public WXSvgAbsComponent(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
@@ -85,7 +86,7 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
 
   /**
    * Sets up the transform matrix on the canvas before an element is drawn.
-   *
+   * <p>
    * NB: for perf reasons this does not apply opacity, as that would mean creating a new canvas
    * layer (which allocates an offscreen bitmap) and having it composited afterwards. Instead, the
    * drawing code should apply opacity recursively.
@@ -109,8 +110,8 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
   }
 
   @WXComponentProp(name = "clipPath")
-  public void setClipPath(@Nullable ReadableArray clipPath) {
-    mClipData = PropHelper.toFloatArray(clipPath);
+  public void setClipPath(@Nullable String clipPath) {
+    mClipData = SvgParser.parserPath(clipPath);
     mClipDataSet = true;
     setupClip();
   }
@@ -153,12 +154,6 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
     } else {
       mMatrix = null;
     }
-
-  }
-
-  @WXComponentProp(name = "responsible")
-  public void setResponsible(boolean responsible) {
-    mResponsible = responsible;
 
   }
 
@@ -216,35 +211,68 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
    * @param data the array of instructions
    * @param path the {@link Path} that can be drawn to a canvas
    */
-  protected void createPath(float[] data, Path path) {
+//  protected void createPath(float[] data, Path path) {
+//    path.moveTo(0, 0);
+//    int i = 0;
+//
+//    while (i < data.length) {
+//      int type = (int) data[i++];
+//      switch (type) {
+//        case PATH_TYPE_MOVETO:
+//          path.moveTo(data[i++] * mScale, data[i++] * mScale);
+//          break;
+//        case PATH_TYPE_CLOSE:
+//          path.close();
+//          break;
+//        case PATH_TYPE_LINETO:
+//          path.lineTo(data[i++] * mScale, data[i++] * mScale);
+//          break;
+//        case PATH_TYPE_CURVETO:
+//          path.cubicTo(
+//              data[i++] * mScale,
+//              data[i++] * mScale,
+//              data[i++] * mScale,
+//              data[i++] * mScale,
+//              data[i++] * mScale,
+//              data[i++] * mScale);
+//          break;
+//        default:
+//          throw new JSApplicationIllegalArgumentException(
+//              "Unrecognized drawing instruction " + type);
+//      }
+//    }
+//  }
+  protected void createPath(ArrayList<SvgParser.PathCmd> cmds, Path path) {
     path.moveTo(0, 0);
     int i = 0;
 
-    while (i < data.length) {
-      int type = (int) data[i++];
-      switch (type) {
+    while (i < cmds.size()) {
+      String cmd = cmds.get(i).mCmd;
+      float[] data = cmds.get(i).mValue;
+      switch (cmd) {
         case PATH_TYPE_MOVETO:
-          path.moveTo(data[i++] * mScale, data[i++] * mScale);
+          path.moveTo(data[0] * mScale, data[1] * mScale);
           break;
         case PATH_TYPE_CLOSE:
           path.close();
           break;
         case PATH_TYPE_LINETO:
-          path.lineTo(data[i++] * mScale, data[i++] * mScale);
+          path.lineTo(data[0] * mScale, data[1] * mScale);
           break;
         case PATH_TYPE_CURVETO:
           path.cubicTo(
-              data[i++] * mScale,
-              data[i++] * mScale,
-              data[i++] * mScale,
-              data[i++] * mScale,
-              data[i++] * mScale,
-              data[i++] * mScale);
+              data[0] * mScale,
+              data[1] * mScale,
+              data[2] * mScale,
+              data[3] * mScale,
+              data[4] * mScale,
+              data[5] * mScale);
           break;
         default:
           throw new JSApplicationIllegalArgumentException(
-              "Unrecognized drawing instruction " + type);
+              "Unrecognized drawing instruction " + cmd);
       }
+      i++;
     }
   }
 
@@ -270,6 +298,12 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
 
   public boolean isResponsible() {
     return mResponsible;
+  }
+
+  @WXComponentProp(name = "responsible")
+  public void setResponsible(boolean responsible) {
+    mResponsible = responsible;
+
   }
 
   protected Path getPath(Canvas canvas, Paint paint) {
@@ -312,6 +346,17 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
   protected void saveDefinition() {
     if (mName != null) {
       getSvgComponent().defineTemplate(this, mName);
+    }
+  }
+
+  @Override
+  protected boolean setProperty(String key, Object param) {
+    switch (key) {
+      case Constants.Name.WIDTH:
+      case Constants.Name.HEIGHT:
+        return false;
+      default:
+        return super.setProperty(key, param);
     }
   }
 }

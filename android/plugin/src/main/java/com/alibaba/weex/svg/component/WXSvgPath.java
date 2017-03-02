@@ -8,13 +8,12 @@ import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.weex.svg.ISvgDrawable;
 import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.SvgParser;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableNativeArray;
-import com.larvalabs.svgandroid.SVGParser;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponentProp;
@@ -46,27 +45,23 @@ public class WXSvgPath extends WXSvgAbsComponent {
 
   private static final int FILL_RULE_EVENODD = 0;
   private static final int FILL_RULE_NONZERO = 1;
-
-  JSONArray mFill = new JSONArray();
-  JSONArray mStroke = new JSONArray();
-  float[] mStrokeDasharray;
   public float mStrokeWidth = 1;
   public float mStrokeOpacity = 1;
   public float mStrokeMiterlimit = 4;
   public float mStrokeDashoffset = 0;
   public Paint.Cap mStrokeLinecap = Paint.Cap.ROUND;
   public Paint.Join mStrokeLinejoin = Paint.Join.ROUND;
-
   public float mFillOpacity = 1.0f;
   public Path.FillType mFillRule = Path.FillType.WINDING;
-  private boolean mFillRuleSet;
-
   protected Path mPath;
-  private float[] mD;
+  protected ArrayList<SvgParser.PathCmd> mD;
+  //private float[] mD;
   protected ReadableArray mPropList;// = new WritableNativeArray();
-
   protected WritableArray mOwnedPropList;// = new WritableNativeArray();
-
+  JSONArray mFill = new JSONArray();
+  JSONArray mStroke = new JSONArray();
+  float[] mStrokeDasharray;
+  private boolean mFillRuleSet = true;
   private ArrayList<String> mChangedList;
   private ArrayList<Object> mOriginProperties;
 
@@ -110,22 +105,9 @@ public class WXSvgPath extends WXSvgAbsComponent {
 
   @WXComponentProp(name = "d")
   public void setPath(@Nullable String shapePath) {
-    JSONArray jsonArray = null;
-    mPath = SVGParser.parsePath(shapePath);
-//    try {
-//      jsonArray = new JSONArray(shapePath);
-//    } catch (JSONException e) {
-//      e.printStackTrace();
-//    }
-//    mD = PropHelper.toFloatArray(jsonArray);
+    mD = SvgParser.parserPath(shapePath);
+    Log.v(TAG, "svg path is " + SvgParser.parserPath(shapePath));
     setupPath();
-  }
-
-  @WXComponentProp(name = "d")
-  public void setPath(@Nullable ReadableArray shapePath) {
-    mD = PropHelper.toFloatArray(shapePath);
-    setupPath();
-    
   }
 
 //  @WXComponentProp(name = "fill")
@@ -140,7 +122,6 @@ public class WXSvgPath extends WXSvgAbsComponent {
   @WXComponentProp(name = "fillOpacity")
   public void setFillOpacity(float fillOpacity) {
     mFillOpacity = fillOpacity;
-    
   }
 
   @WXComponentProp(name = "fillRule")
@@ -158,7 +139,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
 
     mFillRuleSet = true;
     setupPath();
-    
+
   }
 
 //  @WXComponentProp(name = "stroke")
@@ -173,7 +154,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
   @WXComponentProp(name = "strokeOpacity")
   public void setStrokeOpacity(float strokeOpacity) {
     mStrokeOpacity = strokeOpacity;
-    
+
   }
 
   @WXComponentProp(name = "strokeDasharray")
@@ -185,13 +166,13 @@ public class WXSvgPath extends WXSvgAbsComponent {
         mStrokeDasharray[i] = mStrokeDasharray[i] * mScale;
       }
     }
-    
+
   }
 
   @WXComponentProp(name = "strokeDashoffset")
   public void setStrokeDashoffset(float strokeWidth) {
     mStrokeDashoffset = strokeWidth * mScale;
-    
+
   }
 
   @WXComponentProp(name = "strokeWidth")
@@ -202,7 +183,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
   @WXComponentProp(name = "strokeMiterlimit")
   public void setStrokeMiterlimit(float strokeMiterlimit) {
     mStrokeMiterlimit = strokeMiterlimit;
-    
+
   }
 
   @WXComponentProp(name = "strokeLinecap")
@@ -221,7 +202,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
         throw new JSApplicationIllegalArgumentException(
             "strokeLinecap " + mStrokeLinecap + " unrecognized");
     }
-    
+
   }
 
   @WXComponentProp(name = "strokelinejoin")
@@ -240,7 +221,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
         throw new JSApplicationIllegalArgumentException(
             "strokeLinejoin " + mStrokeLinejoin + " unrecognized");
     }
-    
+
   }
 
   @WXComponentProp(name = "proplist")
@@ -256,8 +237,9 @@ public class WXSvgPath extends WXSvgAbsComponent {
     }
 
     mPropList = copy;
-    
+
   }
+
   @WXComponentProp(name = "stroke")
   public void setStroke(String stroke) {
     if (!TextUtils.isEmpty(stroke)) {
@@ -319,7 +301,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
     return mPath;
   }
 
-  private void setupPath() {
+  protected void setupPath() {
     // init path after both fillRule and path have been set
     if (mFillRuleSet && mD != null) {
       mPath = new Path();
@@ -327,6 +309,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
       super.createPath(mD, mPath);
     }
   }
+
   /**
    * Sets up paint according to the props set on a shadow view. Returns {@code true}
    * if the fill should be drawn, {@code false} if not.
