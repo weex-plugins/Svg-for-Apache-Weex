@@ -1,133 +1,122 @@
 <template>
   <div class="page">
-    <image class="logo" src="http://img1.vued.vanthink.cn/vued0366b8d467968db7b4e9055288972c4e.png"></image>
-    <p>rect</p>
-    <div class="item">
-      <svg width="300" height="300">
-        <rect x="20" y="20" width="120" height="120" fill="#f39c12"/> 
-        <rect x="20" y="200" rx="22.5" ry="22.5" width="100" height="45" style="fill:#ea6153"/> 
-      </svg>
+    <div class="hd">
+      <image class="logo" src="http://img1.vued.vanthink.cn/vued482987a60a387b3a19150ad8d2c038df.png"></image>
+      <text class="desc"> A weex plugin for svg support </text>
     </div>
-    <p>circle</p>
-    <div class="item">
-      <svg width="200" height="200">
-        <circle cx="50" cy="50" r="45" style="fill:#ea6153;"/>
-        <circle cx="150" cy="50" r="45" style="stroke:#ea6153; stroke-width:2; fill:none;"/>
-        <circle cx="250" cy="50" r="45" style="stroke:#ea6153; stroke-width:1; stroke-dasharray:5; fill:none;" />
-        <circle cx="350" cy="50" r="45" style="fill:#ea6153;fill-opacity:0.6;" />
-      </svg>
-    </div>
-    <p>line</p>
-    <div class="item">
-      <svg width="200" height="200">
-        <line x1="10" y1="70" x2="120" y2="70" stroke="#ea6153" stroke-width="2" />
-        <line x1="70" y1="10" x2="70" y2="120" stroke="#ea6153" stroke-width="2" />
-      </svg>
-    </div>
-    <p>polyline</p>
-    <div class="item">
-      <svg width="200" height="200">
-          <polyline points="0,0 100,0 100,100" fill="#ea6153"></polyline>            
-      </svg>
-    </div>
-    <p>polygon</p>
-    <div class="item">
-      <svg width="200" height="200">
-        <polygon  points="0,30 50,0 70,30 70,60 50,80 0,60" />           
-      </svg>
-    </div>
-    <p>path</p>
-    <div class="item">
-      <svg width="200" height="200">
-          <path d="M50,50 A50,50 0 0,1 150,80" stroke="#e84c3d" fill="none;" />           
-      </svg>
-    </div>
-    <p>text</p>
-    <div class="item">
-      <svg width="200" height="200">
-        <text x="20"  y="40">Example SVG text 1</text>          
-      </svg>
-    </div>
-    <p>linear gradient</p>
-    <div class="item">
-      <svg width="200" height="200">
-        <defs>
-          <linearGradient id="myLinearGradient1"
-                          x1="0%" y1="0%"
-                          x2="0%" y2="100%"
-                          spreadMethod="pad">
-            <stop offset="0%"   stop-color="#3498db" stop-opacity="1"/>
-            <stop offset="100%" stop-color="#2980b9" stop-opacity="1"/>
-          </linearGradient>
-        </defs>
-
-        <rect x="10" y="10" width="75" height="100" rx="10" ry="10"
-           style="fill:url(#myLinearGradient1);" />          
-      </svg>
-    </div>
-    <p>radial gradient</p>
-    <div class="item">
-      <svg width="200" height="200">
-        <defs>
-          <radialGradient id="myRadialGradient4"
-             fx="50%" fy="50%" r="45%"
-             spreadMethod="pad">
-            <stop offset="0%"   stop-color="#a8dff9" stop-opacity="1"/>
-            <stop offset="100%" stop-color="#1fb5fc" stop-opacity="1" />
-          </radialGradient>
-        </defs>
-        <rect x="20" y="10" width="100" height="100" rx="10" ry="10" fill="url(#myRadialGradient4)" />         
-      </svg>
-    </div>
-    <p>fill props</p>
-    <div class="item">
-      <svg width="200" height="200">
-        <circle cx="50" cy="50" r="45" style="fill:#ea6153;"/>
-        <circle cx="100" cy="50" r="45" style="fill:#9b59b6;"/> 
-        <circle cx="150" cy="50" r="45" style="fill:#2ecc71;"/>  
-      </svg>
-    </div>
-    <p>stroke props </p>
-    <div class="item">
-      <svg width="200" height="200">
-        <circle cx="50" cy="50" r="20" fill="none" stroke="#ea6153"/>
-        <circle cx="100" cy="50" r="20" fill="none" stroke="#9b59b6"/> 
-        <circle cx="150" cy="50" r="20" fill="none" stroke="#2ecc71" stroke-width="2"/>  
-      </svg>
+    <div class="main">
+      <text class="h3">Components</text>
+      <div class="group">
+        <group-item :url="com.url" :name="com.name" :icon="com.icon" v-for="com in coms" :key="com.name"></group-item>
+      </div>
+      <text class="h3">Props</text>
+      <div class="group">
+        <group-item :url="prop.url" :name="prop.name" :icon="prop.icon" v-for="prop in props" :key="prop.name"></group-item>
+      </div>
+      <text class="h3">Advanced</text>
+      <div class="group">
+        <group-item :url="demo.url" :name="demo.name" :icon="demo.icon" v-for="demo in demos" :key="demo.name"></group-item>
+      </div>
     </div>
   </div>
-   
 </template>
-
+   
 <style>
   .page{
     flex: 1;
     padding-top: 20px;
     text-align: center;
-    justify-content: center;
+    background-color: #f1f1f1;
+  }
+  .hd{
     align-items: center;
   }
   .logo{
-    width: 240px;
-    height: 120px;
+    width: 375px;
+    height: 240px;
   }
-  .item{
-    width: 400px;
-    height: 300px;
-    margin: 20px auto;
+  .main{
+    margin-top: 40px;
   }
-  svg{
-    margin-top: 20px;
-  }
-  p{
+  .h3{
+    margin: 20px;
+    font-size: 24px;
     text-align: left;
+    color: #888;
   }
+  .group{
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #fff;
+    border-top:2px solid rgba(0,0,0,.1);
+    border-bottom: 2px solid rgba(0,0,0,.3);
+  }
+  
 </style>
 
 <script>
- // require('../web/index');
+  import groupItem from './include/group-item.vue';
   module.exports = {
-     
+    components: {
+      groupItem
+    },
+    data() {
+      return {
+        coms: [
+          {
+            name: 'rect',
+            icon: 'http://img1.vued.vanthink.cn/vuedd801b5ac3622f3a86e1274693e0cca06.png',
+            url: 'pages/com-rect.js'
+          },
+          {
+            name: 'circle',
+            icon: 'http://img1.vued.vanthink.cn/vuedc972ff2bbd382918da0d54a50abf5886.png',
+            url: 'pages/com-circle.js'
+          },
+          {
+            name: 'line',
+            icon: 'http://img1.vued.vanthink.cn/vuedd34a9f03fb2cfb4e4928fd50dac7c2f0.png',
+            url: 'pages/com-line.js'
+          },
+          {
+            name: 'polyline',
+            icon: 'http://img1.vued.vanthink.cn/vued636ac9019ecf3cfb37203afaf58831a1.png',
+            url: 'pages/com-polyline-and-polygon.js'
+          },
+          {
+            name: 'path',
+            icon: 'http://img1.vued.vanthink.cn/vued95cc17b37133964d0700f8efe0dd464f.png',
+            url: 'pages/path.js'
+          }
+        ],
+        props: [
+          {
+            name: 'fill',
+            icon: 'http://img1.vued.vanthink.cn/vued6ff56846b1d309224d1c4984b7e885be.png',
+            url: 'pages/prop-fill.js'
+          },
+          {
+            name: 'stroke',
+            icon: 'http://img1.vued.vanthink.cn/vued8ad53b37ce358bbe5fa5964f46cc1309.png',
+            url: 'pages/prop-stroke.js'
+          }
+        ],
+        demos: [
+          {
+            name: 'animation',
+            icon: 'http://img1.vued.vanthink.cn/vued3be8484ba1350e3f81f8c9ad447c435f.png',
+            url: 'page/animation.js'
+          },
+          {
+            name: 'complex svg shape',
+            icon: 'http://img1.vued.vanthink.cn/vued3be8484ba1350e3f81f8c9ad447c435f.png',
+            url: '',
+          }
+        ]
+        
+      }
+    }   
     
   };
   

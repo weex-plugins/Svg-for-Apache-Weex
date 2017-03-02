@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import registerComponent from '../mixins/registerComponent';
-module.export = {
+import registerComponent from '../mixins/register-component';
+export default {
   props: [
     'width',
     'height',

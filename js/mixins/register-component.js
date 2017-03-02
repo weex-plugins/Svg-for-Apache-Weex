@@ -8,6 +8,7 @@ function colorToRgba(c) {
 export default {
   computed: {
     fill() {
+      console.log(this.fill);
       return colorToRgba(this.fill);
     }
   }
