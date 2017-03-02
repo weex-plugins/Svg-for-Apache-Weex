@@ -1,6 +1,6 @@
 # weex-plugin-svg
 
-<img src="http://img1.vued.vanthink.cn/vuedce1fdb60c37be5ceb24608c9ef09b053.png" width="240" />
+<img src="http://img1.vued.vanthink.cn/vued50a9ba7ffdffdfe2578e0f921a741f5a.png" width="240" />
 
 a weex plugin to support svg for Web/iOS/Andoid
 
@@ -110,7 +110,7 @@ The `path` element is the generic element to define a shape. All the basic shape
 
 ``` html  
 <svg width="200" height="200">
-  <path d="M50,50 A50,50 0 0,1 150,80" stroke="#e84c3d" fill="none;" />           
+  <path d="M50,50 A50,50 0 0,1 150,80" stroke="#e84c3d" fill="none" />           
 </svg>
 ```
 
