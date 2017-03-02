@@ -10,7 +10,6 @@
     flex-direction: row;
     align-items: center;
     height: 110px;
-    
     color: #555;
   }
   .group-item-text{
@@ -24,8 +23,8 @@
 <script>
 
 import icon from './icon.vue';
-import helper from './lib/helper.js';
-const naviagtor = weex.requireModule('naviagtor');
+import helper from '../lib/helper.js';
+const navigator = weex.requireModule('navigator');
 export default {
   components: {
     icon  
@@ -47,7 +46,7 @@ export default {
   
   methods: {
     redirect() {
-      const url = helper.setBundleUrl(this.url);
+      const url = helper.setBundleUrl(this.url, weex);
       navigator.push({
         url: url
       });

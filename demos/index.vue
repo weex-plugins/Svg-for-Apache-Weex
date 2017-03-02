@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="hd">
-      <image class="logo" src="http://img1.vued.vanthink.cn/vued482987a60a387b3a19150ad8d2c038df.png"></image>
+      <image class="logo" src="http://img1.vued.vanthink.cn/vued50a9ba7ffdffdfe2578e0f921a741f5a.png"></image>
       <text class="desc"> A weex plugin for svg support </text>
     </div>
     <div class="main">
