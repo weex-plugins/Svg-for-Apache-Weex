@@ -33,7 +33,7 @@ export default {
       if (path === 'web' || path === 'dist') {
         base = h5Base + '/dist/';
       } else {
-        base = h5Base + '/';
+        base = h5Base + '';
       }
     } else {
       base = nativeBase + path + '/';

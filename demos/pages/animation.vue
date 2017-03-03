@@ -15,19 +15,15 @@
       </div>
       <div class="item">
          <svg viewBox="0 0 30 30" enable-background="new 0 0 30 30" width="120" height="120">
-
           <rect fill="#FBBA44" width="15" height="15">
             <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;15,0;15,15;0,15;0,0;" repeatCount="indefinite"/>
-          </rect>	
-
+          </rect>
           <rect x="15" fill="#E84150" width="15" height="15">
             <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;0,15;-15,15;-15,0;0,0;" repeatCount="indefinite"/>
-          </rect>	
-
+          </rect>
           <rect x="15" y="15" fill="#62B87B" width="15" height="15">
             <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;-15,0;-15,-15;0,-15;0,0;" repeatCount="indefinite"/>
           </rect>	
-
           <rect y="15" fill="#2F6FB6" width="15" height="15">
             <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;0,-15;15,-15;15,0;0,0;" repeatCount="indefinite"/>
           </rect>
@@ -102,25 +98,21 @@
             <path fill="#b65c32" d="M1191.49,664.74h53.94a5.25,5.25,0,0,1,5.25,5.25v4.79a0,0,0,0,1,0,0h-64.44a0,0,0,0,1,0,0V670a5.25,5.25,0,0,1,5.25-5.25Z" transform="translate(822.83 -663.17) rotate(44.67)"/>
           </g>
           <g id="clock" data-name="Layer 8">
-
             <circle fill="#fa976c" cx="847.7" cy="247.59" r="74.66" transform="translate(-32.91 314.05) rotate(-20.6)"/>
             <circle fill="#ffc541" cx="847.7" cy="247.59" r="63.44" transform="translate(-32.91 314.05) rotate(-20.6)"/>
             <rect  fill="#6f5b92"  x="845" y="189.5" width="6.04" height="58" rx="3.02" ry="3.02" />
             <rect  fill="#6f5b92" x="845" y="209.5" width="6.04" height="38" rx="3.02" ry="3.02" transform="translate(1611.22 -230.4) rotate(130.4)"/>
-                <circle  fill="#6f5b92"  cx="847.7" cy="247.59" transform="translate(-32.91 314.05) rotate(-20.6)" r="3" />
+            <circle  fill="#6f5b92"  cx="847.7" cy="247.59" transform="translate(-32.91 314.05) rotate(-20.6)" r="3" />
           </g>
           <g id="box" data-name="Layer 9">
             <g id="box-top"><polygon fill="#b65c32" points="569.71 382.28 653.74 329.39 747.13 320.1 679.2 369.85 569.71 382.28"></polygon>    
             <polygon fill="#fa976c" points="691.95 367.2 570.87 392.34 565.32 383.35 687.8 357.45 691.95 367.2"></polygon>
-
-
             <polygon fill="#fa976c" points="661.54 337.48 570.87 392.34 562.42 378.92 652.25 322.38 658.12 321.34 661.54 337.48"></polygon><polygon fill="#b65c32" points="661.54 337.48 570.87 392.34 562.42 378.92 652.25 322.38 658.12 321.34 661.54 337.48"></polygon><polygon class="cls-5" points="747.13 320.1 661.54 337.48 652.25 322.38 738.4 307.1 747.13 320.1"></polygon>
             </g>
               <path fill="#fa976c" d="M588.28,420.26s3.44,5.2,5.19,8l43.1,68.48,158.81-100-43.1-68.48q-2.63-4.17-5.47-8Z"></path>
               <path fill="#b65c32" d="M588.28,420.26s3.44,5.2,5.19,8l43.1,68.48,158.81-100-43.1-68.48q-2.63-4.17-5.47-8Z"></path>
             <rect fill="#fa976c" x="693.73" y="335.51" width="83.99" height="90.58" transform="translate(-89.78 450.43) rotate(-32.19)"></rect>
           </g>
-
           <g id="rucksack" data-name="Layer 6">
             <g id="stripe"><path  fill="#9b462c" d="M1200.32,473.91h0a13.74,13.74,0,0,0-18.41,7.44l-55,129.86a14.82,14.82,0,0,0,7.13,19.21h0a13.74,13.74,0,0,0,18.41-7.44l55-129.86A14.82,14.82,0,0,0,1200.32,473.91Z"/>
             <path fill="#aa512e" d="M1202.18,606.34h0a14,14,0,0,0-16.18-11.8l-48.83,9c-7.59,1.4-12.66,9-11.31,16.89h0a14,14,0,0,0,16.18,11.8l48.83-9C1198.46,621.82,1203.53,614.26,1202.18,606.34Z"/>
@@ -249,7 +241,6 @@
     cursor: pointer;
     font-size: 28px;  
   }
-
 </style>
 
 <script>
@@ -275,7 +266,7 @@
       },
       
       runBicycle() {
-        
+           
       },
       
       runSakura() {

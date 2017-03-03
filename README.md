@@ -16,8 +16,9 @@ git clone https://github.com/weex-plugins/weex-plugin-svg.git
 
 cd weex-plugin-svg
 
-weex ./demos/index.vue
+weex demos --entry demo/index.vue
 ```
+[Demos](https://weex-plugins.github.io/weex-svg/weex.html?page=index.js)
 
 ### How to use
 
