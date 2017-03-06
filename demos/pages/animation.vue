@@ -11,7 +11,7 @@
             </path>
           </svg>
         
-        <text class="desc">earth animation by  Kurt Gierke</text>
+        <text class="desc">a simple animation</text>
       </div>
       <div class="item">
          <svg viewBox="0 0 30 30" enable-background="new 0 0 30 30" width="120" height="120">
@@ -150,7 +150,6 @@
             <text class="btn-text-white" @click="runEarth">Start Animation</text>
           </div>
         </div>
-        <text class="desc">"r" defines the radius of the circle. </text>
       </div>
       <div class="item">
         <svg style="width:300px;height:300px;" fill="#ff3377" viewBox="0 0 1000 1000">
@@ -171,7 +170,6 @@
             <text class="btn-text-dark" @click="stopSakura">Shrink Animation</text>
           </div>
         </div>
-        <text class="desc">use fill and stroke to set the color and outline of the component</text>
       </div>
     </scroller>
   </div>
