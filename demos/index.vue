@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <scroller class="page">
     <div class="hd">
       <image class="logo" src="http://img1.vued.vanthink.cn/vued50a9ba7ffdffdfe2578e0f921a741f5a.png"></image>
       <text class="desc"> A weex plugin for svg support </text>
@@ -18,12 +18,11 @@
         <group-item :url="demo.url" :name="demo.name" :icon="demo.icon" v-for="demo in demos" :key="demo.name"></group-item>
       </div>
     </div>
-  </div>
+  </scroller>
 </template>
    
 <style>
   .page{
-    flex: 1;
     padding-top: 20px;
     text-align: center;
     background-color: #f1f1f1;
@@ -37,6 +36,7 @@
   }
   .main{
     margin-top: 40px;
+    overflow: auto;
   }
   .h3{
     margin: 20px;
@@ -87,7 +87,7 @@
           {
             name: 'path',
             icon: 'http://img1.vued.vanthink.cn/vued95cc17b37133964d0700f8efe0dd464f.png',
-            url: 'pages/path.js'
+            url: 'pages/com-path.js'
           }
         ],
         props: [

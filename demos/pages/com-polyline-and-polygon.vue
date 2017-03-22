@@ -19,14 +19,14 @@
       <text class="desc">The polygon element defines a closed shape consisting of a set of connected straight line segments</text>
       <div class="item">
         <svg class="item-shape">
-          <polygon  points="0,30 50,0 70,30 70,60 50,80 0,60" /> 
+          <polygon  points="0,30 50,0 70,30 70,60 50,80 0,60" fill="#ea6153" /> 
         </svg>
         <text class="desc">a simple polygon componnet </text>
       </div>
       <div class="item">
         <svg class="item-shape">
-          <polygon  points="300,40 450,200 150,200" />
-          <polyline points="150,100 450,100 300,260 150,100"></polyline>
+          <polygon  points="300,40 450,200 150,200" fill="#9b59b6" />
+          <polyline points="150,100 450,100 300,260 150,100" fill="#2ecc71"></polyline>
         </svg>
         <text class="desc">As the some to polyline ,the points attribute defines a list of points required to draw a polyline or polygon component</text>
       </div>

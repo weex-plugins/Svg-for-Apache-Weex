@@ -6,10 +6,10 @@ export default {
     let host = '';
     let path = '';
     let nativeBase;
-    const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0;
+    const isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
     const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
     if (isAndroidAssets) {
-      nativeBase = 'file://assets/dist';
+      nativeBase = 'file://assets/dist/';
     } else if (isiOSAssets) {
       // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
       // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
@@ -36,9 +36,9 @@ export default {
         base = h5Base + '';
       }
     } else {
-      base = nativeBase + path + '/';
+      base = nativeBase + path;
+      jsFile = jsFile.replace('.js', '.weex.js');
     }
-
     const newUrl = base + jsFile;
     return newUrl;
   }
