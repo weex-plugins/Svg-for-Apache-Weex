@@ -10,76 +10,38 @@
 package com.alibaba.weex.svg.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.alibaba.weex.svg.ISvgDrawable;
-import com.taobao.weex.ui.component.WXComponent;
-
-import javax.annotation.Nullable;
 
 /**
  * Custom {@link View} implementation that draws an RNSVGSvg React view and its \children.
  */
-public class WXSvgView extends ViewGroup {
-
-    public enum Events {
-        EVENT_DATA_URL("onDataURL");
-
-        private final String mName;
-
-        Events(final String name) {
-            mName = name;
-        }
-
-        @Override
-        public String toString() {
-            return mName;
-        }
-    }
-
-    private @Nullable Bitmap mBitmap;
-    private WXComponent mComponent;
+public class WXSvgView extends FrameLayout {
     private ISvgDrawable mSvgDrawable;
 
     public WXSvgView(Context context) {
         super(context);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-
-    }
-
-
-    public void setBitmap(Bitmap bitmap) {
-        if (mBitmap != null) {
-            mBitmap.recycle();
-        }
-        mBitmap = bitmap;
-        invalidate();
+        setWillNotDraw(false);
+//        setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Log.v("WXSvgAbsComponent", getTag().toString()
+            + " onDraw Layout is (" + getLayoutParams().width + ", " + getLayoutParams().height
+            + ") onDraw is (" + getWidth() + ", " + getHeight() + ")");
+        //canvas.drawColor(Color.GREEN);
         if(mSvgDrawable != null) {
-            mSvgDrawable.draw(canvas, null, 0);;
+            mSvgDrawable.draw(canvas, null, 0);
         }
-        if (mComponent != null && mComponent instanceof ISvgDrawable) {
-            ((ISvgDrawable)mComponent).draw(canvas, null, 0);
-        }
-//        if (mBitmap != null) {
-//            canvas.drawBitmap(mBitmap, 0, 0, null);
-//        }
     }
 
     public void setSvgDrawable(ISvgDrawable drawable) {
         mSvgDrawable = drawable;
     }
-
-
-
 }
