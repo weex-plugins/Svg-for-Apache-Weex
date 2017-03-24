@@ -18,6 +18,8 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.alibaba.weex.svg.ISvgDrawable;
 import com.alibaba.weex.svg.SvgParser;
@@ -32,10 +34,11 @@ import com.taobao.weex.ui.view.WXFrameLayout;
 import com.taobao.weex.utils.WXViewUtils;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
-public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
+public class WXSvgAbsComponent extends WXVContainer<FrameLayout> implements ISvgDrawable {
   private static final String TAG = "WXSvgAbsComponent";
 
   protected static final float MIN_OPACITY_FOR_DRAW = 0.01f;
@@ -62,8 +65,8 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
 
   private static final int CLIP_RULE_EVENODD = 0;
   private static final int CLIP_RULE_NONZERO = 1;
-  protected final float mScale;// = 1.0f;
-  protected float mOpacity = 1f;
+  protected float mScale = 1.0f;
+  protected float mOpacity = 1.0f;
   protected Matrix mMatrix = new Matrix();
   protected
   @Nullable
@@ -89,8 +92,14 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
   }
 
   @Override
-  protected WXFrameLayout initComponentHostView(@NonNull Context context) {
-    return new WXFrameLayout(context);
+  protected FrameLayout initComponentHostView(@NonNull Context context) {
+    WXFrameLayout wxFrameLayout = new WXFrameLayout(context);
+    wxFrameLayout.setWillNotDraw(false);
+    return wxFrameLayout;
+  }
+  @Override
+  protected void addSubView(View child, int index) {
+
   }
 
   public void draw(Canvas canvas, Paint paint, float opacity) {
@@ -112,6 +121,9 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
     return count;
   }
 
+  public boolean isVirtualComponent(){
+    return true;
+  }
   /**
    * Restore the canvas after an element was drawn. This is always called in mirror with
    * {@link #saveAndSetupCanvas}.
