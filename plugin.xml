@@ -129,5 +129,6 @@
                 <param name="api" value="svg"/>
             </feature>
         </config-file>
+        <framework src="com.taobao.android:weex_svg:0.0.0.1"/>
     </platform>
 </plugin>
