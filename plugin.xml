@@ -17,28 +17,117 @@
   specific language governing permissions and limitations
   under the License.
 -->
-<plugin xmlns="http://www.w3.org/ns/widgets"
-    id="weex-plugin-svg"
-    version="0.1.0">
+<plugin id="weex-plugin-svg"
+        version="0.1.0"
+        xmlns="http://www.w3.org/ns/widgets">
     <name>weex-plugin-svg</name>
     <description></description>
     <license>Apache 2.0</license>
     <keywords>weex,plugin</keywords>
     <repo>https://*.git</repo>
     <issue>https://*</issue>
-     <!-- ios -->
-     <platform name="ios">
+    <!-- ios -->
+    <platform name="ios">
 
-     </platform>
+    </platform>
 
-     <!-- android -->
-     <platform name="android">
-
-
-     </platform>
-
-
-
-
-
+    <!-- android -->
+    <platform name="android">
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgCircle">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgCircle"/>
+                <param name="api" value="circle"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgRadialGradient">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgRadialGradient"/>
+                <param name="api" value="radialGradient"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgLinearGradient">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgLinearGradient"/>
+                <param name="api" value="linearGradient"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgStop">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgStop"/>
+                <param name="api" value="stop"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgDefs">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgDefs"/>
+                <param name="api" value="defs"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgPolyLine">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgPolyLine"/>
+                <param name="api" value="polyline"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgPolygon">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgPolygon"/>
+                <param name="api" value="polygon"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgEllipse">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgEllipse"/>
+                <param name="api" value="ellipse"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgRect">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgRect"/>
+                <param name="api" value="rect"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgLine">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgLine"/>
+                <param name="api" value="line"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgPath">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgPath"/>
+                <param name="api" value="path"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="config.xml">
+            <feature name="WXSvgPath">
+                <param name="category" value="component"/>
+                <param name="android-package"
+                       value="com.alibaba.weex.svg.component.WXSvgContainer"/>
+                <param name="api" value="svg"/>
+            </feature>
+        </config-file>
+    </platform>
 </plugin>
