@@ -33,6 +33,17 @@
       </div>
       <div class="item">
         <svg style="width:400px;height:300px;">
+          <defs>
+          <linearGradient name="trunkgrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#996d2e;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#d5bc79;stop-opacity:1" />
+          </linearGradient>
+
+          <radialGradient id="shadow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" style="stop-color:#666666;stop-opacity:0.7" />
+            <stop offset="100%" style="stop-color:#666666;stop-opacity:0" />
+          </radialGradient>
+          </defs>
           <ellipse cx="188" cy="273" rx="80" ry="20" style="fill:url(#shadow);opacity:0.3;" />
           <ellipse cx="188" cy="273" rx="24" ry="5" style="fill:url(#shadow);" />
           <polygon points="182,211 187,211 187,274 180,274" fill="url(#trunkgrad)" />
@@ -53,16 +64,6 @@
           <polygon points="216,114 220,167 185,137" style="fill:#588f32" />
           <polygon points="216,114 250,148 220,167" style="fill:#598d33" />
 
-          <linearGradient id="trunkgrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#996d2e;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#d5bc79;stop-opacity:1" />
-          </linearGradient>
-
-          <radialGradient id="shadow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" style="stop-color:#666;
-            stop-opacity:0.7" />
-            <stop offset="100%" style="stop-color:#666;stop-opacity:0" />
-          </radialGradient>
         </svg>
         <text class="desc">A tree by  Luke Reid</text>
       </div>
