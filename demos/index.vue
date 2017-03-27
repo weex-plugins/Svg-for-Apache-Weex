@@ -88,6 +88,11 @@
             name: 'path',
             icon: 'http://img1.vued.vanthink.cn/vued95cc17b37133964d0700f8efe0dd464f.png',
             url: 'pages/com-path.js'
+          },
+          {
+            name: 'gradient',
+            icon: 'http://img1.vued.vanthink.cn/vued8f6b468fa26fca56c459d2dcaf5c572d.png',
+            url: 'pages/com-gradient.js'
           }
         ],
         props: [

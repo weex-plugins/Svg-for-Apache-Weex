@@ -13,11 +13,11 @@
         <svg class="item-shape">
           <path d="M20,20 L420,20" stroke="#e84c3d" stroke-width="4" fill="none" />  
           <path d="M120,240
-                   A50,50 0 0,0 120,80" style="stroke:#3598dc;fill:none; stroke-width:2;" />
+                   A50,50 0 0,0 120,80" stroke="#3598dc" fill="none" stroke-width="2";/>
         <path d="M50,50
-                   A50,50 0 1,0 120,80" style="stroke:#2fcc71;fill:none;stroke-width:2;" />
+                   A50,50 0 1,0 120,80" stroke="#2fcc71" fill="none" stroke-width="2" />
         <path d="M50,50
-                   A50,50 0 0,1 120,80" style="stroke:#ea6153;fill:none;stroke-width:2;" />
+                   A50,50 0 0,1 120,80" stroke="#ea6153" fill="none" stroke-width="2" />
         </svg>
         <text class="desc">The attribute d defines a path to follow</text>
       </div>

@@ -30,7 +30,6 @@
       </div>
     </scroller>
   </div>
-   
 </template>
 
 <style>
