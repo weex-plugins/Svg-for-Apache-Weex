@@ -15,6 +15,7 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,7 +124,6 @@ public class PropHelper {
       float offsetX = (midX - width / 2);
       float offsetY = (midY - height / 2);
 
-
       int[] stopsColors = mStopColors;
       float[] stops = mStops;
       //parseGradientStops(mColors, stopsCount, stops, stopsColors, opacity);
@@ -145,11 +145,17 @@ public class PropHelper {
       } else {
         float rx = PropHelper.fromPercentageToFloat(mPoints.get(2), width, 0f, scale);
         float ry = PropHelper.fromPercentageToFloat(mPoints.get(3), height, 0f, scale);
+
         float cx = PropHelper.fromPercentageToFloat(mPoints.get(4), width, offsetX, scale);
         float cy = PropHelper.fromPercentageToFloat(mPoints.get(5), height, offsetY, scale) / (ry / rx);
+        Log.v("PropHelper", "width " + box.right + ", height " + box.bottom
+            + "center x " +box.left + ", center y " + box.top);
+        Log.v("PropHelper", "xxx rx " + mPoints.get(2) + ", ry " + mPoints.get(3) + ", cx " +
+            mPoints.get(4) + ", cy " + mPoints.get(5));
+        Log.v("PropHelper", "rx " + rx + ", ry " + ry + ", cx " + cx + ", cy " + cy);
         // TODO: support focus point.
-        //float fx = PropHelper.fromPercentageToFloat(mPoints.getString(0), width, offsetX) * scale;
-        //float fy = PropHelper.fromPercentageToFloat(mPoints.getString(1), height, offsetY) * scale / (ry / rx);
+        float fx = PropHelper.fromPercentageToFloat(mPoints.get(0), width, offsetX , scale);
+        float fy = PropHelper.fromPercentageToFloat(mPoints.get(1), height, offsetY, scale) / (ry / rx);
         Shader radialGradient = new RadialGradient(
             cx,
             cy,

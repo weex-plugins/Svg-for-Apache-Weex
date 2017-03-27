@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.util.FloatMath;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -38,6 +37,7 @@ public class SvgParser {
         case '7':
         case '8':
         case '9':
+//        case '.':
           if (prevCmd == 'm' || prevCmd == 'M') {
             cmd = (char) ((prevCmd) - 1);
             break;
@@ -416,7 +416,7 @@ public class SvgParser {
         return null;
       }
     } else {
-      return SVGColors.mapColour(v);
+      return SvgColors.mapColour(v);
     }
   }
 

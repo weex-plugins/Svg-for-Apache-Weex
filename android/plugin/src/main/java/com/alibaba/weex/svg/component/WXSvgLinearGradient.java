@@ -27,7 +27,7 @@ public class WXSvgLinearGradient extends WXSvgDefs {
     super(instance, dom, parent);
   }
 
-  @WXComponentProp(name = "name")
+  @WXComponentProp(name = "id")
   public void setName(String id) {
     mName = id;
   }
@@ -67,7 +67,8 @@ public class WXSvgLinearGradient extends WXSvgDefs {
         if (getChild(i) instanceof WXSvgStop) {
           ImmutableDomObject domObject = getChild(i).getDomObject();
           int color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
-          float offset = Float.parseFloat((String) domObject.getAttrs().get("offset"));
+          float offset = PropHelper.fromPercentageToFloat(
+              (String) domObject.getAttrs().get("offset"), 1, 0, 1);
           stops.add(offset);
           stopColors.add(color);
         }

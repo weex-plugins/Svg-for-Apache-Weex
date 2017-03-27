@@ -51,7 +51,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
   //private float[] mD;
 //  protected ReadableArray mPropList;// = new WritableNativeArray();
 //  protected WritableArray mOwnedPropList;// = new WritableNativeArray();
-  private String mFillColor = "white";
+  private String mFillColor = "#00ffffff";
   private String mStrokeColor;
   float[] mStrokeDasharray;
   private boolean mFillRuleSet = true;

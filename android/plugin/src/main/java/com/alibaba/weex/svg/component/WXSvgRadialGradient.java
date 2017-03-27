@@ -1,5 +1,7 @@
 package com.alibaba.weex.svg.component;
 
+import android.text.TextUtils;
+
 import com.alibaba.weex.svg.PropHelper;
 import com.alibaba.weex.svg.SvgParser;
 import com.taobao.weex.WXSDKInstance;
@@ -18,19 +20,20 @@ public class WXSvgRadialGradient extends WXSvgDefs {
   public WXSvgRadialGradient(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
     super(instance, dom, parent);
   }
-  private String mCx = "0";
 
-  private String mCy = "0";
+  private String mCx = "50%";
 
-  private String mRx = "1";
+  private String mCy = "50%";
 
-  private String mRy = "0";
+  private String mRx = "50%";
 
-  private String mFx = "1";
+  private String mRy = "50%";
 
-  private String mFy = "0";
+  private String mFx = "50%";
 
-  @WXComponentProp(name = "name")
+  private String mFy = "50%";
+
+  @WXComponentProp(name = "id")
   public void setName(String id) {
     mName = id;
   }
@@ -65,6 +68,12 @@ public class WXSvgRadialGradient extends WXSvgDefs {
     mRy = ry;
   }
 
+  @WXComponentProp(name = "r")
+  public void setR(String r) {
+    mRy = r;
+    mRx = r;
+  }
+
   @Override
   protected void saveDefinition() {
     if (mName != null) {
@@ -81,8 +90,12 @@ public class WXSvgRadialGradient extends WXSvgDefs {
       for (int i = 0; i < childCount(); i++) {
         if (getChild(i) instanceof WXSvgStop) {
           ImmutableDomObject domObject = getChild(i).getDomObject();
-          int color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
-          float offset = Float.parseFloat((String) domObject.getAttrs().get("offset"));
+          int color = SvgParser.parseColor("#ff000000");
+          if (!TextUtils.isEmpty((String) domObject.getAttrs().get("stopColor"))) {
+            color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
+          }
+          float offset = PropHelper.fromPercentageToFloat(
+              (String) domObject.getAttrs().get("offset"), 1, 0, 1);
           stops.add(offset);
           stopColors.add(color);
         }
