@@ -5,9 +5,9 @@
       <text class="desc">this is simple pressure test </text>
       <div class="item">
         <svg class="item-shape">
-          <circle cx="300" cy="200" v-for="item in circles" :key="item.r" :r="item.r" :stroke="item.color" stroke-width="2"/>
+          <circle cx="300" cy="200" v-for="item in circles" fill="none" :key="item.r" :r="item.r" :stroke="item.color" stroke-width="2"/>
         </svg>
-        <text class="desc">a simple circle componnet</text>
+        <text class="desc">more than 100 cricles</text>
       </div>
       <div class="item">
         <svg class="item-shape">
@@ -15,7 +15,9 @@
           <circle cx="160" cy="160" r="50" fill="#ea6153"/>
           <circle cx="275" cy="275" r="50" fill="#ea6153"/>
         </svg>
-        <text class="desc">use "cx" and "cy" to set the center position of the component</text>
+        <div class="btn">
+          <text>随机添加形状</text>
+        </div>
       </div>
       <div class="item">
         <svg class="item-shape">
@@ -69,8 +71,8 @@
 <script>
   import navbar from '../include/navbar.vue';
   const circleArr = [];
-  for(var i=4; i < 100; i+=4) {
-    circleArr.push({r: i, color: ['#', i, i, i, i, i, i].join('').substr(0,6)});   
+  for(var i=4; i < 150; i+=4) {
+    circleArr.push({r: i, color: ['#', i, i, i, i, i, i].join('').substr(0,7)});   
   }
   module.exports = {
     components: {
