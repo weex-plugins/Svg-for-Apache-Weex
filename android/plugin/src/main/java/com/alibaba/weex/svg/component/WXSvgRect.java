@@ -16,13 +16,13 @@ import com.taobao.weex.ui.component.WXVContainer;
  */
 
 public class WXSvgRect extends WXSvgPath {
-  private String mX;
+  private String mX = "0";
 
-  private String mY;
+  private String mY = "0";
 
-  private String mW;
+  private String mW = "0";
 
-  private String mH;
+  private String mH = "0";
 
   private String mRx = "0";
 
