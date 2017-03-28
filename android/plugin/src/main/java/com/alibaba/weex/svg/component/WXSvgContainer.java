@@ -3,18 +3,13 @@ package com.alibaba.weex.svg.component;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.alibaba.weex.svg.ISvgDrawable;
-import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.SvgBrush;
 import com.alibaba.weex.svg.view.WXSvgView;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.Constants;
@@ -22,7 +17,6 @@ import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXComponentProp;
 import com.taobao.weex.ui.component.WXVContainer;
-import com.taobao.weex.ui.view.WXCircleIndicator;
 import com.taobao.weex.utils.WXViewUtils;
 
 import java.util.HashMap;
@@ -35,7 +29,7 @@ import java.util.Map;
 public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawable {
   private static final Map<String, WXSvgAbsComponent> mDefinedClipPaths = new HashMap<>();
   private static final Map<String, WXSvgAbsComponent> mDefinedTemplates = new HashMap<>();
-  private static final Map<String, PropHelper.RNSVGBrush> mDefinedBrushes = new HashMap<>();
+  private static final Map<String, SvgBrush> mDefinedBrushes = new HashMap<>();
 
   private WXDomObject mDom;
 
@@ -118,11 +112,11 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
     return mDefinedTemplates.get(templateRef);
   }
 
-  public void defineBrush(PropHelper.RNSVGBrush brush, String brushRef) {
+  public void defineBrush(SvgBrush brush, String brushRef) {
     mDefinedBrushes.put(brushRef, brush);
   }
 
-  public PropHelper.RNSVGBrush getDefinedBrush(String brushRef) {
+  public SvgBrush getDefinedBrush(String brushRef) {
     return mDefinedBrushes.get(brushRef);
   }
 

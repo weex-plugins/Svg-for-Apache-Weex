@@ -3,7 +3,8 @@ package com.alibaba.weex.svg.component;
 import android.graphics.Color;
 import android.text.TextUtils;
 
-import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.ParserHelper;
+import com.alibaba.weex.svg.SvgBrush;
 import com.alibaba.weex.svg.SvgParser;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.ImmutableDomObject;
@@ -98,7 +99,7 @@ public class WXSvgRadialGradient extends WXSvgDefs {
           if (!TextUtils.isEmpty((CharSequence) domObject.getStyles().get("stopColor"))) {
             color = SvgParser.parseColor((String) domObject.getStyles().get("stopColor"));
           }
-          float offset = PropHelper.fromPercentageToFloat(
+          float offset = ParserHelper.fromPercentageToFloat(
               (String) domObject.getAttrs().get("offset"), 1, 0, 1);
           stops.add(offset);
           stopColors.add(color);
@@ -114,7 +115,7 @@ public class WXSvgRadialGradient extends WXSvgDefs {
         positions[i] = stops.get(i);
       }
 
-      PropHelper.RNSVGBrush brush = new PropHelper.RNSVGBrush(PropHelper.RNSVGBrush.GradientType
+      SvgBrush brush = new SvgBrush(SvgBrush.GradientType
           .RADIAL_GRADIENT, points, positions, colors);
       getSvgComponent().defineBrush(brush, mName);
     }

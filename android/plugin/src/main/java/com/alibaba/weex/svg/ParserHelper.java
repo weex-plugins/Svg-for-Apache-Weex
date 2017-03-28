@@ -10,6 +10,9 @@ package com.alibaba.weex.svg;
  * governing permissions and limitations under the License.
  */
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Parses numbers from SVG text. Based on the Batik Number Parser (Apache 2 License).
  *
@@ -41,6 +44,35 @@ public class ParserHelper {
     this.pos = pos;
     n = s.length;
     current = s[pos];
+  }
+
+  /**
+   * Converts percentage string into actual based on a relative number
+   *
+   * @param percentage percentage string
+   * @param relative   relative number
+   * @param offset     offset number
+   * @return actual float based on relative number
+   */
+  public static float fromPercentageToFloat(String percentage, float relative, float offset, float scale) {
+    Matcher matched = Pattern.compile("^(\\-?\\d+(?:\\.\\d+)?)%$").matcher(percentage);
+    if (matched.matches()) {
+      return Float.valueOf(matched.group(1)) / 100 * relative + offset;
+    } else {
+      return Float.valueOf(percentage) * scale;
+    }
+  }
+
+  /**
+   * Judge given string is a percentage-like string or not.
+   *
+   * @param string percentage string
+   * @return string is percentage-like or not.
+   */
+
+  public static boolean isPercentage(String string) {
+    Pattern pattern = Pattern.compile("^(\\-?\\d+(?:\\.\\d+)?)%$");
+    return pattern.matcher(string).matches();
   }
 
   private char read() {

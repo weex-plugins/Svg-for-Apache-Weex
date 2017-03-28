@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.ParserHelper;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.ComponentCreator;
@@ -61,10 +61,10 @@ public class WXSvgLine extends WXSvgPath {
   @Override
   protected Path getPath(Canvas canvas, Paint paint) {
     Path path = new Path();
-    float x1 = PropHelper.fromPercentageToFloat(mX1, mCanvasWidth, 0, mScale);
-    float y1 = PropHelper.fromPercentageToFloat(mY1, mCanvasHeight, 0, mScale);
-    float x2 = PropHelper.fromPercentageToFloat(mX2, mCanvasWidth, 0, mScale);
-    float y2 = PropHelper.fromPercentageToFloat(mY2, mCanvasHeight, 0, mScale);
+    float x1 = ParserHelper.fromPercentageToFloat(mX1, mCanvasWidth, 0, mScale);
+    float y1 = ParserHelper.fromPercentageToFloat(mY1, mCanvasHeight, 0, mScale);
+    float x2 = ParserHelper.fromPercentageToFloat(mX2, mCanvasWidth, 0, mScale);
+    float y2 = ParserHelper.fromPercentageToFloat(mY2, mCanvasHeight, 0, mScale);
 
     path.moveTo(x1, y1);
     path.lineTo(x2, y2);

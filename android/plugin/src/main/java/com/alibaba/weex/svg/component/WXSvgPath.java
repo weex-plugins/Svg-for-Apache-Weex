@@ -8,7 +8,7 @@ import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.SvgBrush;
 import com.alibaba.weex.svg.SvgParser;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.WXDomObject;
@@ -299,7 +299,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
           mPath.computeBounds(box, true);
         }
         String key = colors.substring(colors.indexOf("#") + 1, colors.lastIndexOf(")"));
-        PropHelper.RNSVGBrush brush = getSvgComponent().getDefinedBrush(key);
+        SvgBrush brush = getSvgComponent().getDefinedBrush(key);
         if (brush != null) {
           brush.setupPaint(paint, box, mScale, opacity);
         }
