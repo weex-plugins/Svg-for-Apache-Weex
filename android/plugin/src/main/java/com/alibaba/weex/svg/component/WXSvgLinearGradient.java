@@ -1,5 +1,8 @@
 package com.alibaba.weex.svg.component;
 
+import android.graphics.Color;
+import android.text.TextUtils;
+
 import com.alibaba.weex.svg.PropHelper;
 import com.alibaba.weex.svg.SvgParser;
 import com.taobao.weex.WXSDKInstance;
@@ -15,13 +18,13 @@ import java.util.ArrayList;
  */
 
 public class WXSvgLinearGradient extends WXSvgDefs {
-  private String mX1 = "0";
+  private String mX1 = "0%";
 
-  private String mY1 = "0";
+  private String mY1 = "0%";
 
-  private String mX2 = "1";
+  private String mX2 = "100%";
 
-  private String mY2 = "0";
+  private String mY2 = "0%";
 
   public WXSvgLinearGradient(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
     super(instance, dom, parent);
@@ -66,7 +69,13 @@ public class WXSvgLinearGradient extends WXSvgDefs {
       for (int i = 0; i < childCount(); i++) {
         if (getChild(i) instanceof WXSvgStop) {
           ImmutableDomObject domObject = getChild(i).getDomObject();
-          int color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
+          int color = Color.TRANSPARENT;
+          if (!TextUtils.isEmpty((CharSequence) domObject.getAttrs().get("stopColor"))) {
+            color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
+          }
+          if (!TextUtils.isEmpty((CharSequence) domObject.getStyles().get("stopColor"))) {
+            color = SvgParser.parseColor((String) domObject.getStyles().get("stopColor"));
+          }
           float offset = PropHelper.fromPercentageToFloat(
               (String) domObject.getAttrs().get("offset"), 1, 0, 1);
           stops.add(offset);
