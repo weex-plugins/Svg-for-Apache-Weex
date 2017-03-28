@@ -5,7 +5,7 @@
       <text class="desc">this is simple pressure test </text>
       <div class="item">
         <svg class="item-shape">
-          <circle cx="300" cy="200" v-for="item in circles" :key="item.r" :r="item.r" :fill="item.color"/>
+          <circle cx="300" cy="200" v-for="item in circles" :key="item.r" :r="item.r" :stroke="item.color" stroke-width="2"/>
         </svg>
         <text class="desc">a simple circle componnet</text>
       </div>
@@ -70,7 +70,7 @@
   import navbar from '../include/navbar.vue';
   const circleArr = [];
   for(var i=4; i < 100; i+=4) {
-    circleArr.push({r: i, color: ['#', i, i, i, i, i, i].join('')});   
+    circleArr.push({r: i, color: ['#', i, i, i, i, i, i].join('').substr(0,6)});   
   }
   module.exports = {
     components: {
