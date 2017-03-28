@@ -20,14 +20,21 @@
           C52.4,205.1,41.8,180.9,40.7,154.3L40.7,154.3z M150.5,269c66,0,119.5-53.5,119.5-119.5S216.5,30,150.5,30S31,83.5,31,149.5
           S84.5,269,150.5,269L150.5,269z" fill="#000000"/>
         </svg>
-        <svg style="width:120px; height:120px;" viewBox="0 0 32 32">
-          <path d="M8 8.5v-5.5h16l-5.5 5.5 5.5 5.5h-15v15h-1v-20.5zM9 4v9h12.5l-4.5-4.5 4.5-4.5h-12.5z" fill="#ff0000"></path>
+        <svg style="width:120px; height:120px;" viewBox="0 0 120 120">
+          <path fill="#f1c40f"  d="M29.2,31.2V10h61.5L69.6,31.2l21.2,21.2H33.1V110h-3.8V31.2z M33.1,13.8v34.6h48.1L63.8,31.2l17.3-17.3H33.1z" />
         </svg>
-        <svg style="width:120px; height:120px;" viewBox="0 0 32 32">
-          <path fill="#2ecc71" d="M20.638 20h-8.332l2.244 1.98 2.267 0.011-1.697 0.009h3.378l0.020-0.018-0.099 0.001 2.218-1.983zM21.757 19l3.243-2.9v-8.091c0-0.557-0.455-1.009-1-1.009h-15c-0.552 0-1 0.444-1 1.002v8.198l3.173 2.8h10.583zM13.091 6l3.409-3 3.409 3h4.093c1.107 0 1.997 0.895 1.997 2v3.36l3 2.64v14.006c0 1.1-0.897 1.994-2.004 1.994h-20.993c-1.114 0-2.004-0.893-2.004-1.994v-14.006l3-2.64v-3.36c0-1.112 0.894-2 1.997-2h4.093zM18.428 6l-1.928-1.7-1.928 1.7h3.856zM26 12.677v2.656l1.5-1.333-1.5-1.323zM7 15.333v-2.656l-1.5 1.323 1.5 1.333zM13.5 23l-7 6h20l-7-6h-6zM27.685 28.725v0 0c0.194-0.183 0.315-0.442 0.315-0.725v-13l-8 7.017 7.685 6.708zM5.315 28.725l7.685-6.708-8-7.017v13c0 0.283 0.121 0.542 0.315 0.725v0 0zM10 10v1h13v-1h-13zM10 13v1h13v-1h-13zM10 16v1h13v-1h-13z"></path>
+        <svg style="width:120px; height:120px;" viewBox="0 0 120 120">
+          <path fill="#2ec7c1" d="M73.6,64.6H47.3l7.1,6.3l7.2,0l-5.4,0h10.7l0.1-0.1l-0.3,0L73.6,64.6L73.6,64.6z M77.1,61.4l10.2-9.2V26.7
+	c0-1.8-1.4-3.2-3.2-3.2H36.8c-1.7,0-3.2,1.4-3.2,3.2v25.9l10,8.8H77.1L77.1,61.4z M49.7,20.3l10.8-9.5l10.8,9.5h12.9
+	c3.5,0,6.3,2.8,6.3,6.3v10.6l9.5,8.3v44.3c0,3.5-2.8,6.3-6.3,6.3H27.3c-3.5,0-6.3-2.8-6.3-6.3V45.6l9.5-8.3V26.6
+	c0-3.5,2.8-6.3,6.3-6.3L49.7,20.3L49.7,20.3z M66.6,20.3l-6.1-5.4l-6.1,5.4C54.4,20.3,66.6,20.3,66.6,20.3z M90.5,41.4v8.4l4.7-4.2
+	L90.5,41.4z M30.5,49.8v-8.4l-4.7,4.2L30.5,49.8z M51,74L28.9,93h63.2L70,74H51z M95.8,92.1L95.8,92.1L95.8,92.1
+	c0.6-0.6,1-1.4,1-2.3V48.8L71.6,70.9L95.8,92.1z M25.2,92.1l24.3-21.2L24.2,48.8v41.1C24.2,90.7,24.5,91.6,25.2,92.1L25.2,92.1
+	L25.2,92.1z M40,33v3.2H81V33H40z M40,42.4v3.2H81v-3.2H40z M40,51.9v3.2H81v-3.2H40z"/>
         </svg>
-        <svg style="width:120px; height:120px;" viewBox="0 0 32 32">
-          <path fill="#f1c40f" d="M16 23l9 6-4-10 9-6h-10l-4-10-4 10h-10l9 6-4 10 9-6zM16 21.753l-6.8 4.547 3.2-7.7-7.2-4.6h7.5l3.3-8.5 3.3 8.5h7.5l-7.2 4.6 3.2 7.7-6.8-4.547z"></path>
+        <svg style="width:120px; height:120px;" viewBox="0 0 120 120">
+          <path fill="#3ec7c1" d="M59,77l28.3,18.9L74.7,64.4L103,45.6H71.6L59,14.1L46.4,45.6H15l28.3,18.9L30.7,95.9L59,77z M59,73.1L37.6,87.4
+	l10.1-24.2L25.1,48.7h23.6L59,22l10.4,26.7h23.6L70.3,63.2l10.1,24.2C80.4,87.4,59,73.1,59,73.1z"/>
         </svg>
         <text class="desc">Some Svg Icons</text>
       </div>
@@ -35,17 +42,17 @@
         <svg style="width:400px;height:300px;">
           <defs>
           <linearGradient id="trunkgrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#996d2e;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#d5bc79;stop-opacity:1" />
+            <stop offset="0%" stop-color="#996d2e"/>
+            <stop offset="100%" stop-color="#d5bc79" />
           </linearGradient>
 
           <radialGradient id="shadow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" style="stop-color:#000000;stop-opacity:0.7" />
-            <stop offset="100%" style="stop-color:#666666;stop-opacity:0" />
+            <stop offset="0%" stop-color="000000" />
+            <stop offset="100%" stop-color="#666666"/>
           </radialGradient>
           </defs>
-          <ellipse cx="188" cy="273" rx="80" ry="20" style="fill:url(#shadow);opacity:0.3;" />
-          <ellipse cx="188" cy="273" rx="24" ry="5" style="fill:url(#shadow);" />
+          <ellipse cx="188" cy="273" rx="80" ry="20" fill="url(#shadow)" />
+          <ellipse cx="188" cy="273" rx="24" ry="5"fill="url(#shadow)" />
           <polygon points="182,211 187,211 187,274 180,274" fill="url(#trunkgrad)" />
           <polygon points="187,211 196,211 198,274 187,274" fill="#996d2e" />
 
@@ -61,8 +68,8 @@
           <polygon points="154,162 188,211 155,218" fill="#54892f" stroke="#54892f" />
 
           <polygon points="200,70 216,114 185,137" fill="#79b544" stroke="#79b544" />
-          <polygon points="216,114 220,167 185,137" style="fill:#588f32" />
-          <polygon points="216,114 250,148 220,167" style="fill:#598d33" />
+          <polygon points="216,114 220,167 185,137" fill="#588f32" />
+          <polygon points="216,114 250,148 220,167" fill="#598d33" />
 
         </svg>
         <text class="desc">A tree by  Luke Reid</text>
