@@ -5,36 +5,25 @@
       <text class="desc">this is simple pressure test </text>
       <div class="item">
         <svg class="item-shape">
-          <circle cx="300" cy="200" v-for="item in circles" fill="none" :key="item.r" :r="item.r" :stroke="item.color" stroke-width="2"/>
+          <circle cx="300" cy="200" v-for="item in circles" fill="none" :key="item.r" :r="item.r" :stroke="item.color"  stroke-width="2"/>
         </svg>
         <text class="desc">more than 100 cricles</text>
       </div>
       <div class="item">
-        <svg class="item-shape">
-          <circle cx="55" cy="55" r="50" fill="#ea6153"/>
-          <circle cx="160" cy="160" r="50" fill="#ea6153"/>
-          <circle cx="275" cy="275" r="50" fill="#ea6153"/>
+        <svg class="item-shape2">
+          <rect v-for="item in randomShapes.rects" :key="item.x" fill="none" :x="item.x" :y="item.y" :width="item.w" :height="item.h" stroke="#222" stroke-width="2" />
         </svg>
-        <div class="btn">
-          <text>随机添加形状</text>
+        <div class="btn" @click="genRandomShapes">
+          <text class="btn-text1">随机添加形状</text>
         </div>
       </div>
       <div class="item">
-        <svg class="item-shape">
-          <circle cx="55" cy="55" r="50" fill="#ea6153"/>
-          <circle cx="200" cy="200" r="100" fill="#ea6153"/>
-          <circle cx="330" cy="330" r="30" fill="#ea6153"/>
+        <svg class="item-shape2">
+          <polygon :points="points" fill="#9b59b6" />
         </svg>
-        <text class="desc">"r" defines the radius of the circle. </text>
-      </div>
-      <div class="item">
-        <svg class="item-shape">
-          <circle cx="105" cy="200" r="100" fill="#ea6153"/>  
-          <circle cx="155" cy="200" r="100" fill="#3498db"/>  
-          <circle cx="195" cy="200" r="100" fill="#9b59b6"/>
-          <circle cx="410" cy="200" r="100" fill="#fff" stroke-width="4" stroke="#9b59b6"/> 
-        </svg>
-        <text class="desc">use fill and stroke to set the color and outline of the component</text>
+        <div class="btn" @click="changePath">
+          <text class="btn-text1">随机改变形状</text>
+        </div>
       </div>
     </scroller>
   </div>
@@ -66,6 +55,19 @@
     width: 600px;
     height: 480px;
   }
+  .item-shape2{
+    width: 600px;
+    height: 600px;
+  }
+  .btn{
+    padding: 20px;
+    background-color: #1ba1e2;
+  }
+  .btn-text1{
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #fff;
+  }
 </style>
 
 <script>
@@ -81,8 +83,41 @@
     
     data() {
       return {
-        circles: circleArr
+        circles: circleArr,
+        randomShapes: {
+          circles: [],
+          rects: [],
+          polygon: [],
+        },
+        points: '',
       }
+    },
+    
+    methods: {
+      
+      genRandomShapes() {
+         function genRect() {
+           return {
+             x: Math.floor(Math.random() * 300),
+             y: Math.floor(Math.random() * 300),
+             w: Math.floor(Math.random() * 300),
+             h: Math.floor(Math.random() * 300),
+           }
+         }
+          console.log(this.randomShapes.rects);
+         this.randomShapes.rects.push(genRect());
+        
+      },
+      
+      changePath() {
+        let dots = 3 + Math.floor(Math.random() * 10);
+        let path = [];
+        for(let i=0; i<dots; i++) {
+          path.push(Math.floor(Math.random() * 600) + ',' + Math.floor(Math.random() * 600));
+        }
+        this.points = path.join(' ');
+      }
+      
     }
     
     
