@@ -37,7 +37,7 @@ public class SvgParser {
         case '7':
         case '8':
         case '9':
-//        case '.':
+        case '.':
           if (prevCmd == 'm' || prevCmd == 'M') {
             cmd = (char) ((prevCmd) - 1);
             break;
