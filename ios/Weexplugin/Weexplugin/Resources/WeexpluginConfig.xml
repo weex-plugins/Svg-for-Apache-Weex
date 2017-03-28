@@ -60,6 +60,36 @@
         <param name="ios-package" value="WXSVGEllipseComponent" />
         <param name="api" value="ellipse" />
     </feature>
+    <feature name="WXSVGPolygonComponent">
+        <param name="category" value="component" />
+        <param name="ios-package" value="WXSVGPolygonComponent" />
+        <param name="api" value="polygon" />
+    </feature>
+    <feature name="WXSVGPolylineComponent">
+        <param name="category" value="component" />
+        <param name="ios-package" value="WXSVGPolylineComponent" />
+        <param name="api" value="polyline" />
+    </feature>
+    <feature name="WXSVGLinearGradientComponent">
+        <param name="category" value="component" />
+        <param name="ios-package" value="WXSVGLinearGradientComponent" />
+        <param name="api" value="linearGradient" />
+    </feature>
+    <feature name="WXSVGRadialGradientComponent">
+        <param name="category" value="component" />
+        <param name="ios-package" value="WXSVGRadialGradientComponent" />
+        <param name="api" value="radialGradient" />
+    </feature>
+    <feature name="WXSVGDefsComponent">
+        <param name="category" value="component" />
+        <param name="ios-package" value="WXSVGDefsComponent" />
+        <param name="api" value="defs" />
+    </feature>
+    <feature name="WXSVGStopComponent">
+        <param name="category" value="component" />
+        <param name="ios-package" value="WXSVGStopComponent" />
+        <param name="api" value="stop" />
+    </feature>
     <feature name="WXSVGPathComponent">
         <param name="category" value="component" />
         <param name="ios-package" value="WXSVGPathComponent" />
