@@ -26,9 +26,116 @@
     <keywords>weex,plugin</keywords>
     <repo>https://*.git</repo>
     <issue>https://*</issue>
+    <dependency id="weex-adapter-image" version="^1.0.0"/>
+    
     <!-- ios -->
     <platform name="ios">
-
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGComponent" />
+                <param name="api" value="svg" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGLineComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGLineComponent" />
+                <param name="api" value="line" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGCircleComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGCircleComponent" />
+                <param name="api" value="circle" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGRectComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGRectComponent" />
+                <param name="api" value="rect" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGEllipseComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGEllipseComponent" />
+                <param name="api" value="ellipse" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGPolygonComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGPolygonComponent" />
+                <param name="api" value="polygon" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGPolylineComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGPolylineComponent" />
+                <param name="api" value="polyline" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGLinearGradientComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGLinearGradientComponent" />
+                <param name="api" value="linearGradient" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGRadialGradientComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGRadialGradientComponent" />
+                <param name="api" value="radialGradient" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGDefsComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGDefsComponent" />
+                <param name="api" value="defs" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGStopComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGStopComponent" />
+                <param name="api" value="stop" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="WeexpluginConfig.xml">
+            <feature name="WXSVGPathComponent">
+                <param name="category" value="component" />
+                <param name="ios-package" value="WXSVGPathComponent" />
+                <param name="api" value="path" />
+            </feature>
+        </config-file>
+        
+        <framework src="ImageIO.framework" weak="true"/>
+        <framework src="CoreLocation.framework"/>
+        <framework src="CoreGraphics.framework"/>
+        <framework src="AssetsLibrary.framework"/>
+        <framework src="MobileCoreServices.framework"/>
+        <framework src="CoreGraphics.framework"/>
+        <framework src="AVFoundation.framework"/>
+        <framework spec="0.1.2-SNAPSHOT" src="WeexSVGPlugin" type="podspec"/>
+        
     </platform>
 
     <!-- android -->
