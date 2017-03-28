@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.weex.svg.ISvgDrawable;
@@ -30,7 +31,12 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
   private static final Map<String, WXSvgAbsComponent> mDefinedClipPaths = new HashMap<>();
   private static final Map<String, WXSvgAbsComponent> mDefinedTemplates = new HashMap<>();
   private static final Map<String, SvgBrush> mDefinedBrushes = new HashMap<>();
-
+  private int mWidth;
+  private int mHeight;
+  private int mViewBoxX = 0;
+  private int mViewBoxY = 0;
+  private int mviewBoxWidth = 0;
+  private int mviewBoxHeight = 0;
   private WXDomObject mDom;
 
   public WXSvgContainer(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
@@ -56,25 +62,37 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
 
   @WXComponentProp(name = Constants.Name.WIDTH)
   public void setWidth(int width) {
-    getHostView().getLayoutParams().width = (int)WXViewUtils.getRealPxByWidth(width, 750);
+    mWidth = width;
+    getHostView().getLayoutParams().width = (int) WXViewUtils.getRealPxByWidth(width, 750);
   }
 
   @WXComponentProp(name = Constants.Name.HEIGHT)
   public void setHeight(int height) {
-    getHostView().getLayoutParams().height = (int)WXViewUtils.getRealPxByWidth(height, 750);
+    mHeight = height;
+    getHostView().getLayoutParams().height = (int) WXViewUtils.getRealPxByWidth(height, 750);
+  }
+
+  @WXComponentProp(name = "viewBox")
+  public void setViewBox(String viewBox) {
+    String box = viewBox;
+    Log.v("WXSvgContainer", "box is " + box);
+    if (!TextUtils.isEmpty(box)) {
+      String[] p = box.split(" ");
+      if (p != null && p.length == 4) {
+        mViewBoxX = Integer.valueOf(p[0]);
+        mViewBoxY = Integer.valueOf(p[1]);
+        mviewBoxWidth = Integer.valueOf(p[2]);
+        mviewBoxHeight = Integer.valueOf(p[3]);
+      }
+    }
   }
 
   private void drawElements(Canvas canvas) {
     Paint paint = new Paint();
-    Log.v("WXSvgAbsComponent"," =========  start drawElements " + getDomObject().getRef() +
-        "， child count is " + getChildCount());
     processChildren(canvas, paint);
-    Log.v("WXSvgAbsComponent"," =========  end drawElements " + getDomObject().getRef() +
-        "， child count is " + getChildCount());
   }
 
   public synchronized void processChildren(Canvas canvas, Paint paint) {
-    Log.v("WXSvgAbsComponent", "processChildren ");
     for (int i = 0; i < getChildCount(); i++) {
       if (!(getChild(i) instanceof ISvgDrawable)) {
         continue;
@@ -82,7 +100,6 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
 
       ISvgDrawable child = (ISvgDrawable) getChild(i);
       child.draw(canvas, paint, 1f);
-      Log.v("WXSvgAbsComponent", "processChildren " + i + " id is " + getChild(i).getRef());
     }
   }
 
@@ -123,7 +140,15 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
 
   @Override
   public void draw(Canvas canvas, Paint paint, float opacity) {
+    if (mviewBoxHeight == 0 || mviewBoxWidth == 0) {
+      mviewBoxHeight = mHeight;
+      mviewBoxWidth = mWidth;
+    }
+    canvas.save();
+    //canvas.translate(20, 10);
+    canvas.scale(mWidth / mviewBoxWidth, mHeight / mviewBoxHeight, mViewBoxX, mViewBoxY);
     drawElements(canvas);
+    canvas.restore();
   }
 
   @Override
