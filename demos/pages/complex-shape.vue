@@ -34,9 +34,9 @@
       <div class="item">
         <svg style="width:400px;height:300px;">
           <defs>
-          <linearGradient name="trunkgrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#996d2e;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#d5bc79;stop-opacity:1" />
+          <linearGradient id="trunkgrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#996d2e" stop-opacity="1" />
+            <stop offset="100%" stop-color="#d5bc79" stop-opacity="1" />
           </linearGradient>
 
           <radialGradient id="shadow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
