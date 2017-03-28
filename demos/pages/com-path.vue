@@ -7,13 +7,19 @@
         <svg class="item-shape">
           <path d="M300,240 A50,50 0 0,1 150,80" stroke="#e84c3d" stroke-width="4" fill="none" />  
         </svg>
-        <text class="desc">a simple path componnet</text>
+        <text class="desc">a simple path componnent</text>
+      </div>
+      <div class="item">
+        <svg class="item-shape">
+          <path d="M25,100 C25,150 75,150 75,100 S100,25 150,75" stroke="#3598dc" fill="none" stroke-width="2"/>
+        </svg>
+        <text class="desc">path command with C and S</text>
       </div>
       <div class="item">
         <svg class="item-shape">
           <path d="M20,20 L420,20" stroke="#e84c3d" stroke-width="4" fill="none" />  
           <path d="M120,240
-                   A50,50 0 0,0 120,80" stroke="#3598dc" fill="none" stroke-width="2";/>
+                   A50,50 0 0,0 120,80" stroke="#3598dc" fill="none" stroke-width="2"/>
         <path d="M50,50
                    A50,50 0 1,0 120,80" stroke="#2fcc71" fill="none" stroke-width="2" />
         <path d="M50,50
