@@ -205,15 +205,16 @@ public class WXSvgPath extends WXSvgAbsComponent {
         Log.v(TAG, "Paths should have a valid path (d) prop");
       }
 
-      clip(canvas, paint);
+      if (mPath != null) {
+        clip(canvas, paint);
 
-      if (setupFillPaint(paint, opacity * mFillOpacity, null)) {
-        canvas.drawPath(mPath, paint);
+        if (setupFillPaint(paint, opacity * mFillOpacity, null)) {
+          canvas.drawPath(mPath, paint);
+        }
+        if (setupStrokePaint(paint, opacity * mStrokeOpacity, null)) {
+          canvas.drawPath(mPath, paint);
+        }
       }
-      if (setupStrokePaint(paint, opacity * mStrokeOpacity, null)) {
-        canvas.drawPath(mPath, paint);
-      }
-
       restoreCanvas(canvas, count);
       //markUpdateSeen();
     }

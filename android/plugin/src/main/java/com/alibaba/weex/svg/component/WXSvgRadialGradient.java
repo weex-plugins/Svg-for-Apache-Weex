@@ -2,6 +2,7 @@ package com.alibaba.weex.svg.component;
 
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.weex.svg.ParserHelper;
 import com.alibaba.weex.svg.SvgBrush;
@@ -93,11 +94,14 @@ public class WXSvgRadialGradient extends WXSvgDefs {
         if (getChild(i) instanceof WXSvgStop) {
           ImmutableDomObject domObject = getChild(i).getDomObject();
           int color = Color.TRANSPARENT;
-          if (!TextUtils.isEmpty((CharSequence) domObject.getAttrs().get("stopColor"))) {
-            color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
+          String stopColor = (String) domObject.getAttrs().get("stopColor");
+          if (!TextUtils.isEmpty(stopColor) && stopColor.length() > 0) {
+            Log.v("WXSvgRadialGradient", "stop color is " + stopColor);
+            color = SvgParser.parseColor(stopColor);
           }
-          if (!TextUtils.isEmpty((CharSequence) domObject.getStyles().get("stopColor"))) {
-            color = SvgParser.parseColor((String) domObject.getStyles().get("stopColor"));
+          stopColor = (String) domObject.getStyles().get("stopColor");
+          if (!TextUtils.isEmpty(stopColor) && stopColor.length() > 0) {
+            color = SvgParser.parseColor(stopColor);
           }
           float offset = ParserHelper.fromPercentageToFloat(
               (String) domObject.getAttrs().get("offset"), 1, 0, 1);
