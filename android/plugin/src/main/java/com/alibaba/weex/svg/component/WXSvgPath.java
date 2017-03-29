@@ -68,9 +68,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
   @WXComponentProp(name = "d")
   public void setPath(@Nullable String shapePath) {
     mD = SvgParser.parserPath(shapePath);
-    Log.v(TAG, "setPath " + mWXDomObject.getRef() + " svg path is " + SvgParser.parserPath(shapePath));
     setupPath();
-    //getSvgComponent().applyLayoutAndEvent(getSvgComponent());
   }
 
   @WXComponentProp(name = "fillOpacity")
