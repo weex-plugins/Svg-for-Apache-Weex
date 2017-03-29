@@ -89,7 +89,7 @@
           rects: [],
           polygon: [],
         },
-        points: '',
+        points: '100,100 100,200',
       }
     },
     
