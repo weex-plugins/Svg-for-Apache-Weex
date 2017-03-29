@@ -147,13 +147,6 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
       mviewBoxHeight = mHeight;
       mviewBoxWidth = mWidth;
     }
-    //canvas.save();
-    float sx = mWidth * 1.0f / mviewBoxWidth;
-    float sy = mHeight * 1.0f / mviewBoxHeight;
-    float scale = Math.min(sx, sy);
-
-    float width = (float) Math.ceil(mviewBoxWidth) * mScale;
-    float height = (float) Math.ceil(mviewBoxHeight) * mScale;
 
     RectF vbRect = new RectF(mViewBoxX * mScale, mViewBoxY * mScale, (mViewBoxX + mviewBoxWidth) * mScale, (mViewBoxY + mviewBoxHeight) * mScale);
     RectF eRect = new RectF(0, 0, mWidth * mScale, mHeight * mScale);
