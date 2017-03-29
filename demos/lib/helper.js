@@ -37,7 +37,9 @@ export default {
       }
     } else {
       base = nativeBase + path;
-      // jsFile = jsFile.replace('.js', '.weex.js');
+      if(weex.config.env.platform) {
+        jsFile = jsFile.replace('.js', '.weex.js');
+      }      
     }
     const newUrl = base + jsFile;
     return newUrl;

@@ -57,6 +57,7 @@
 
 <script>
   import groupItem from './include/group-item.vue';
+  console.log(weex.config.platform);
   module.exports = {
     components: {
       groupItem
@@ -112,6 +113,11 @@
             name: 'animation',
             icon: 'http://img1.vued.vanthink.cn/vued3be8484ba1350e3f81f8c9ad447c435f.png',
             url: 'pages/animation.js'
+          },
+          {
+            name: 'Icons',
+            icon: 'http://img1.vued.vanthink.cn/vued1d89bd6213951e62d0bad242093c82ce.png',
+            url: 'pages/icons.js',
           },
           {
             name: 'complex svg shape',
