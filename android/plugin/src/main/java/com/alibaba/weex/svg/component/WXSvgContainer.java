@@ -263,33 +263,39 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
     }
   }
 
-  public void addChild(WXComponent child, int index) {
-    super.addChild(child, index);
-    Log.v("WXSvgAbsComponent", "addChild force invalidate");
-    getHostView().postInvalidate();
+  @Override
+  public void updateProperties(Map<String, Object> props) {
+    super.updateProperties(props);
+    invalidate();
   }
 
-  private Bitmap drawBitmap() {
-    WXSvgView host = getHostView();
-    if (host != null) {
-      int width = host.getWidth();
-      int height = host.getHeight();
-      Log.v("WXSvgAbsComponent", "width is " + width + ", height is " + height);
-      Bitmap bitmap = Bitmap.createBitmap(
-          Math.max(1, width),
-          Math.max(1, height),
-          Bitmap.Config.ARGB_8888);
-      Canvas canvas = new Canvas(bitmap);
-      Paint paint = new Paint();
-      processChildren(canvas, paint);
-      return bitmap;
-    }
-    return null;
+
+  public void addChild(WXComponent child, int index) {
+    super.addChild(child, index);
+    //invalidate();
   }
+
+//  private Bitmap drawBitmap() {
+//    WXSvgView host = getHostView();
+//    if (host != null) {
+//      int width = host.getWidth();
+//      int height = host.getHeight();
+//      Log.v("WXSvgAbsComponent", "width is " + width + ", height is " + height);
+//      Bitmap bitmap = Bitmap.createBitmap(
+//          Math.max(1, width),
+//          Math.max(1, height),
+//          Bitmap.Config.ARGB_8888);
+//      Canvas canvas = new Canvas(bitmap);
+//      Paint paint = new Paint();
+//      processChildren(canvas, paint);
+//      return bitmap;
+//    }
+//    return null;
+//  }
 
   public void invalidate() {
     getHostView().setWillNotDraw(false);
-    getHostView().forceLayout();
+    getHostView().postInvalidate();
     Log.v("WXSvgAbsComponent", "invalidate " + getRef());
   }
 }
