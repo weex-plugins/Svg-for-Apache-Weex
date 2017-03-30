@@ -470,4 +470,11 @@ public class WXSvgAbsComponent extends WXVContainer<FrameLayout> implements ISvg
     }
   }
 
+  @Override
+  public void updateProperties(Map<String, Object> props) {
+    super.updateProperties(props);
+    if (getSvgComponent() != null) {
+      getSvgComponent().invalidate();
+    }
+  }
 }

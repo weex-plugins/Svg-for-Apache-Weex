@@ -1,7 +1,6 @@
 package com.alibaba.weex.svg.component;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -148,13 +147,6 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
       mviewBoxHeight = mHeight;
       mviewBoxWidth = mWidth;
     }
-    //canvas.save();
-    float sx = mWidth * 1.0f / mviewBoxWidth;
-    float sy = mHeight * 1.0f / mviewBoxHeight;
-    float scale = Math.min(sx, sy);
-
-    float width = (float) Math.ceil(mviewBoxWidth) * mScale;
-    float height = (float) Math.ceil(mviewBoxHeight) * mScale;
 
     RectF vbRect = new RectF(mViewBoxX * mScale, mViewBoxY * mScale, (mViewBoxX + mviewBoxWidth) * mScale, (mViewBoxY + mviewBoxHeight) * mScale);
     RectF eRect = new RectF(0, 0, mWidth * mScale, mHeight * mScale);
@@ -166,7 +158,8 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
   private static final int MOS_MEET = 0;
   private static final int MOS_SLICE = 1;
   private static final int MOS_NONE = 2;
-  static public Matrix getTransform(RectF vbRect, RectF eRect, String align, int meetOrSlice, boolean fromSymbol) {
+
+  private static Matrix getTransform(RectF vbRect, RectF eRect, String align, int meetOrSlice, boolean fromSymbol) {
     // based on https://svgwg.org/svg2-draft/coords.html#ComputingAViewportsTransform
 
     // Let vb-x, vb-y, vb-width, vb-height be the min-x, min-y, width and height values of the viewBox attribute respectively.
@@ -263,33 +256,39 @@ public class WXSvgContainer extends WXVContainer<WXSvgView> implements ISvgDrawa
     }
   }
 
-  public void addChild(WXComponent child, int index) {
-    super.addChild(child, index);
-    Log.v("WXSvgAbsComponent", "addChild force invalidate");
-    getHostView().postInvalidate();
+  @Override
+  public void updateProperties(Map<String, Object> props) {
+    super.updateProperties(props);
+    invalidate();
   }
 
-  private Bitmap drawBitmap() {
-    WXSvgView host = getHostView();
-    if (host != null) {
-      int width = host.getWidth();
-      int height = host.getHeight();
-      Log.v("WXSvgAbsComponent", "width is " + width + ", height is " + height);
-      Bitmap bitmap = Bitmap.createBitmap(
-          Math.max(1, width),
-          Math.max(1, height),
-          Bitmap.Config.ARGB_8888);
-      Canvas canvas = new Canvas(bitmap);
-      Paint paint = new Paint();
-      processChildren(canvas, paint);
-      return bitmap;
-    }
-    return null;
+
+  public void addChild(WXComponent child, int index) {
+    super.addChild(child, index);
+    //invalidate();
   }
+
+//  private Bitmap drawBitmap() {
+//    WXSvgView host = getHostView();
+//    if (host != null) {
+//      int width = host.getWidth();
+//      int height = host.getHeight();
+//      Log.v("WXSvgAbsComponent", "width is " + width + ", height is " + height);
+//      Bitmap bitmap = Bitmap.createBitmap(
+//          Math.max(1, width),
+//          Math.max(1, height),
+//          Bitmap.Config.ARGB_8888);
+//      Canvas canvas = new Canvas(bitmap);
+//      Paint paint = new Paint();
+//      processChildren(canvas, paint);
+//      return bitmap;
+//    }
+//    return null;
+//  }
 
   public void invalidate() {
     getHostView().setWillNotDraw(false);
-    getHostView().forceLayout();
+    getHostView().postInvalidate();
     Log.v("WXSvgAbsComponent", "invalidate " + getRef());
   }
 }
