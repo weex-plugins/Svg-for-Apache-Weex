@@ -19,7 +19,7 @@
       </div>
       <div class="item">
         <svg class="item-shape2">
-          <polygon :points="points" fill="#9b59b6" />
+          <polygon :points="points" fill="#9b59b6" stroke="#222222" stroke-width="2"/>
         </svg>
         <div class="btn" @click="changePath">
           <text class="btn-text1">随机改变形状</text>
@@ -89,7 +89,7 @@
           rects: [],
           polygon: [],
         },
-        points: '100,100 100,200',
+        points: '100,100 200,200',
       }
     },
     
