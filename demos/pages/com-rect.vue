@@ -39,6 +39,16 @@
         </svg>
         <text class="desc">use fill and stroke to set the color and outline of shape</text>
       </div>
+      <div class="item">
+        <svg style="width:600px;height:600px;">
+          <rect :x="animRect.x" :y="animRect.y" width="50" height="50" fill="#2ecc71"></rect>
+        </svg>
+        <div class="btn-group">
+          <div class="btn" @click="start">
+            <text>开始</text>
+          </div>
+        </div>
+      </div>
     </scroller>
     
   </div>
@@ -71,6 +81,17 @@
     width: 600px;
     height: 480px;
   }
+  .btn-group{
+    flex-direction: row;
+  }
+  .btn{
+    padding: 20px 40px;
+    margin: 20px;
+    border:1px solid #ccc;
+  }
+  .btn-text{
+    color: #333;
+  }
 </style>
 
 <script>
@@ -79,6 +100,31 @@
     components: {
       navbar  
     },
+    
+    data() {
+      return {
+        timer: false,
+        animRect: {
+          x: 5,
+          y: 5
+        }
+      };
+    },
+    
+    methods: {
+      start() {
+        this.timer = setInterval(() => {
+          if(this.animRect.x > 550) {
+            clearInterval(this.timer);
+            this.animRect.x = 5;
+            this.animRect.y = 5;
+          }
+          this.animRect.x += 2;
+          this.animRect.y += 2;
+        }, 1000/60)
+      }
+      
+    }
     
     
   };
