@@ -24,10 +24,10 @@
         <svg class="item-shape">
           <defs>
             <radialGradient id="myRadialGradient"
-               cx="50%" cy="50%" r="45%" fx="50%" fy="50%"
+               cx="20%" cy="50%" r="45%"
                spreadMethod="pad">
-              <stop offset="0%"   stop-color="#ffffff" stop-opacity="1"/>
-              <stop offset="100%" stop-color="#000000" stop-opacity="1" />
+              <stop offset="0%"   stop-color="#4776E6" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#8E54E9" stop-opacity="1" />
             </radialGradient>
           </defs>
           <circle  cx="300" cy="200" r="150" fill="url(#myRadialGradient)" />

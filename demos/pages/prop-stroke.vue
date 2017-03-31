@@ -5,11 +5,11 @@
       <text class="desc">The stroke attribute defines the color of the outline on a given graphical element. The default value for the stroke attribute is none</text>
       <div class="item">
         <svg class="item-shape">
-          <circle cx="200" cy="240" r="150" fill="#ffffff" stroke="#ea6153" stroke-width="2"/>
-          <circle cx="220" cy="240" r="150" fill="#ffffff" stroke="#9b59b6" stroke-width="2"/>
-          <circle cx="240" cy="240" r="150" fill="#ffffff" stroke="#2ecc71" stroke-width="2"/>
-          <circle cx="260" cy="240" r="150" fill="#ffffff" stroke="#3498db" stroke-width="2"/>
-          <circle cx="280" cy="240" r="150" fill="#ffffff" stroke="#1abc9c" stroke-width="2"/>
+          <circle cx="200" cy="240" r="150" fill="#fff" stroke="#ea6153" stroke-width="2"/>
+          <circle cx="220" cy="240" r="150" fill="#fff" stroke="#9b59b6" stroke-width="2"/> 
+          <circle cx="240" cy="240" r="150" fill="#fff" stroke="#2ecc71" stroke-width="2"/>
+          <circle cx="260" cy="240" r="150"  fill="#fff" stroke="#3498db" stroke-width="2"/>
+          <circle cx="280" cy="240" r="150" fill="#fff" stroke="#1abc9c" stroke-width="2"/>
         </svg>
         <text class="warnning">You can only set hex color to the attribute.We'll support more int future.</text>
       </div>

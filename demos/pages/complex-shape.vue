@@ -47,7 +47,7 @@
           </linearGradient>
 
           <radialGradient id="shadow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" stop-color="#000000" />
+            <stop offset="0%" stop-color="000000" />
             <stop offset="100%" stop-color="#666666"/>
           </radialGradient>
           </defs>
@@ -62,7 +62,7 @@
           <polygon points="187,28 216,114 154,162"  fill="#619b37" stroke="#619b37" />
           <polygon points="187,28 216,114 264,162 204,28" fill="#619b37" stroke="#619b37" />
           <polygon points="216,114 264,162 223,210" fill="#54892f" stroke="#54892f" />
-          <polygon points="216,114 223,210 154,162" fill="#5c9433" />
+          <polygon points="216,114 223,210 154,162" style="fill:#5c9433" />
 
           <polygon points="154,162 223,210 188,211" fill="#54892f" stroke="#54892f" />
           <polygon points="154,162 188,211 155,218" fill="#54892f" stroke="#54892f" />
