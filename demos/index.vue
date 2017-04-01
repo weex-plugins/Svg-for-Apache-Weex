@@ -117,6 +117,11 @@
             name: 'complex svg shape',
             icon: 'http://img1.vued.vanthink.cn/vued1d89bd6213951e62d0bad242093c82ce.png',
             url: 'pages/D3.js',
+          },
+          {
+            name: 'Test',
+            icon: 'http://img1.vued.vanthink.cn/vued1d89bd6213951e62d0bad242093c82ce.png',
+            url: 'pages/pressure.js',
           }
         ]
         
