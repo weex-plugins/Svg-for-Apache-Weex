@@ -24,7 +24,8 @@
     top:0;
     display:flex;
     flex-direction: row;
-    height: 88px;
+    height: 108px;
+    padding-top: 20px;
     background-color: #fff;
     align-items: center;
     border-bottom-width: 2px;
@@ -40,7 +41,7 @@
   }
   .btn-arrow-left{
     width: 60px;
-    height: 60px;
+    height: 80px;
     margin-left: 10px;
   }
   .btn-text{
@@ -48,8 +49,9 @@
   }
   .title{
     position: absolute;
-    left:0;
-    right:0;
+    left: 180px;
+    top: 20px;
+    right:180px;
     top:0;
     height: 88px;
     line-height: 88px;
