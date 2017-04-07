@@ -121,7 +121,7 @@
           }
           this.animRect.x += 2;
           this.animRect.y += 2;
-        }, 1000/60)
+        }, 20)
       }
       
     }
