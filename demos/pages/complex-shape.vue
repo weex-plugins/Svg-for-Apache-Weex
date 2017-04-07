@@ -47,7 +47,7 @@
           </linearGradient>
 
           <radialGradient id="shadow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" stop-color="000000" />
+            <stop offset="0%" stop-color="#000000" />
             <stop offset="100%" stop-color="#666666"/>
           </radialGradient>
           </defs>
