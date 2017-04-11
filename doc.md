@@ -133,7 +133,7 @@ weex plugin add weex-svg
 </svg>
 
 ```
-<img src="screenshots/ele-rect.png" />
+<img src="http://img1.vued.vanthink.cn/vued1d57e449aba15c3fe8778f7a05541825.png" />
 
 
 #### circle
@@ -146,7 +146,7 @@ weex plugin add weex-svg
 </svg>
 ```
 
-<img src="./screenshots/ele-circle.png" />
+<img src="http://img1.vued.vanthink.cn/vued385a377a46e040ab275773d538c88e82.png" />
 
 #### line
 
@@ -159,7 +159,7 @@ weex plugin add weex-svg
 </svg>
 ```
 
-<img src="./screenshots/ele-line.png" />
+<img src="http://img1.vued.vanthink.cn/vued7f0da5c30bde89cf80d0cabf475529c1.png" />
 
 #### polyline
 
@@ -171,7 +171,7 @@ weex plugin add weex-svg
 </svg>
 ```
 
-<img src="./screenshots/ele-polyline.png" />
+<img src="http://img1.vued.vanthink.cn/vued63089137ee5fe4ad7f8698ef29eb0cc0.png" />
 
 
 
@@ -184,7 +184,7 @@ weex plugin add weex-svg
 </svg>
 ```
 
-<img src="./screenshots/ele-path.png" />
+<img src="http://img1.vued.vanthink.cn/vued574ca3cc6d13119caf55684e983ca521.png" />
 
 
 
@@ -201,7 +201,7 @@ fill 主要用于填充不同的颜色。
 </svg>
 ```
 
-<img src="./screenshots/prop-fill.png" />
+<img src="http://img1.vued.vanthink.cn/vued3d31af635b3a2a5873822e0e8ba372c8.png" />
 
 #### stroke
 
@@ -214,7 +214,7 @@ fill 主要用于填充不同的颜色。
 </svg>
 ```
 
-<img src="./screenshots/prop-stroke.png" />
+<img src="http://img1.vued.vanthink.cn/vuedf4145cf4cbf4835001b4de2fb63520d4.png" />
  
  
  
