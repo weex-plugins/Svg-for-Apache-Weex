@@ -3,7 +3,7 @@
 近几年 SVG 逐渐成为前端开发的热门的技术。我们可以在我们的业务场景中构建我们的图标，以及替代部分位图，随着动画交互的普及，SVG 也成为了大家的选择之一。
 今天我们给大家带来如何在 weex 项目中通过 [weex-svg](https://github.com/weex-plugins/weex-svg)  来实现 svg 的一些图形信息的展示。
 
-我们查阅 [weex-svg]的文档，可以了解它目前支持的一些组件和属性有:
+我们查阅 [weex-svg](https://github.com/weex-plugins/weex-svg) 的文档，可以了解它目前支持的一些组件和属性有:
 
 #### 基本的图形
 
@@ -26,7 +26,7 @@
 ### 快速开始
  
 weex-svg 在插件市场已经发布了，我们可以通过 [weex-toolkit](https://github.com/weexteam/weex-toolkit) 来添加插件。
-首先我们快速开始创建一个项目：
+首先我们创建一个项目：
 
 ``` bash
 weex create svgapp
@@ -117,7 +117,7 @@ weex plugin add weex-svg
  
  预览效果:
  
- <img src="http://img1.vued.vanthink.cn/vuedf348778b4712be475850bc37095b0f17.png" />
+ <img width="320" src="http://img1.vued.vanthink.cn/vuedf348778b4712be475850bc37095b0f17.png" />
  
  ### 组件使用
  
@@ -228,7 +228,7 @@ fill 主要用于填充不同的颜色。
  
  我们可以感知到下面图片有些模糊。 我们常用的svg的场景，主要就是** 图标的显示 **和一些** 动画 **的使用。对于一些复杂的图形，首先我们的工具不一定可以导出svg，第二svg导出的体积可能会比优化后的位图还大。而小图标对于设计师而言，他们可以方便的导出svg代码，相对而言，svg的代码可读性强，有利于工程师进行代码使用和编辑。我们对比了常见的页面布局下的图标渲染视频:
  
- <video style="width:320px;height:640px;" src="http://cloud.video.taobao.com/play/u/481286803/p/1/e/6/t/1/54127540.mp4"></video>
+ <video controls style="width:320px;height:640px;" src="http://cloud.video.taobao.com/play/u/481286803/p/1/e/6/t/1/54127540.mp4"></video>
  
  
  透过 [weex debug](https://github.com/weexteam/weex-toolkit) 的功能我们可以查看手机(测试机型 HUAWEI Honor7) 的log 信息，了解到我们渲染的时间。下面我们通过一组简单的测试来看下渲染时间对比:
@@ -298,7 +298,7 @@ fill 主要用于填充不同的颜色。
  <img src="http://img1.vued.vanthink.cn/vuedce5e5f5cdb29538f21f5ebb94cf2fed3.png" />
  
  从图中我们可以直观的看到，SVG的优点在于节省了资源的请求，在 render 上时间则不占优势，原因在于我们需要花时间去进行DOM的解析然后按照命令去进行图形的绘制。
- 使用weex compile 进行文件的编译后可以对比发现 
+ 使用 `weex compile` 进行文件的编译后文件大小对比如图:
 
 <img src="http://img1.vued.vanthink.cn/vued5bccb21cf015853ae62c1b790dba285a.png" />
 
@@ -321,8 +321,7 @@ fill 主要用于填充不同的颜色。
  ```
  然后进行项目的demo 文件拷贝到 src目录下, 运行 `weex run android` 即可。
  
- <video style="width:320px;height:640px;" src="http://cloud.video.taobao.com/play/u/481286803/p/1/e/6/t/1/54127586.mp4"></video>
- 
+ <video controls style="width:320px;height:640px;" src="http://cloud.video.taobao.com/play/u/481286803/p/1/e/6/t/1/54127586.mp4"></video>
  
  
  
