@@ -134,7 +134,7 @@
         <framework src="MobileCoreServices.framework"/>
         <framework src="CoreGraphics.framework"/>
         <framework src="AVFoundation.framework"/>
-        <framework spec="0.1.3-SNAPSHOT" src="WeexSVGPlugin" type="podspec"/>
+        <framework spec="0.1.0" src="WeexSVGPlugin" type="podspec"/>
         
     </platform>
 
