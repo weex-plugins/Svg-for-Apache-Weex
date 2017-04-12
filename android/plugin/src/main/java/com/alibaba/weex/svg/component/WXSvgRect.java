@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 
-import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.ParserHelper;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponentProp;
@@ -16,13 +16,13 @@ import com.taobao.weex.ui.component.WXVContainer;
  */
 
 public class WXSvgRect extends WXSvgPath {
-  private String mX;
+  private String mX = "0";
 
-  private String mY;
+  private String mY = "0";
 
-  private String mW;
+  private String mW = "0";
 
-  private String mH;
+  private String mH = "0";
 
   private String mRx = "0";
 
@@ -72,12 +72,12 @@ public class WXSvgRect extends WXSvgPath {
   @Override
   protected Path getPath(Canvas canvas, Paint paint) {
     Path path = new Path();
-    float x = PropHelper.fromPercentageToFloat(mX, mCanvasWidth, 0, mScale);
-    float y = PropHelper.fromPercentageToFloat(mY, mCanvasHeight, 0, mScale);
-    float w = PropHelper.fromPercentageToFloat(mW, mCanvasWidth, 0, mScale);
-    float h = PropHelper.fromPercentageToFloat(mH, mCanvasHeight, 0, mScale);
-    float rx = PropHelper.fromPercentageToFloat(mRx, mCanvasWidth, 0, mScale);
-    float ry = PropHelper.fromPercentageToFloat(mRy, mCanvasHeight, 0, mScale);
+    float x = ParserHelper.fromPercentageToFloat(mX, mCanvasWidth, 0, mScale);
+    float y = ParserHelper.fromPercentageToFloat(mY, mCanvasHeight, 0, mScale);
+    float w = ParserHelper.fromPercentageToFloat(mW, mCanvasWidth, 0, mScale);
+    float h = ParserHelper.fromPercentageToFloat(mH, mCanvasHeight, 0, mScale);
+    float rx = ParserHelper.fromPercentageToFloat(mRx, mCanvasWidth, 0, mScale);
+    float ry = ParserHelper.fromPercentageToFloat(mRy, mCanvasHeight, 0, mScale);
 
     if (rx != 0 || ry != 0) {
       if (rx == 0) {

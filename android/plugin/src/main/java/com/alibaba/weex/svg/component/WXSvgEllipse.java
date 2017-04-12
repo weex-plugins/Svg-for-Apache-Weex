@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 
-import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.ParserHelper;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponentProp;
@@ -58,10 +58,10 @@ public class WXSvgEllipse extends WXSvgPath {
   @Override
   protected Path getPath(Canvas canvas, Paint paint) {
     Path path = new Path();
-    float cx = PropHelper.fromPercentageToFloat(mCx, mCanvasWidth, 0, mScale);
-    float cy = PropHelper.fromPercentageToFloat(mCy, mCanvasHeight, 0, mScale);
-    float rx = PropHelper.fromPercentageToFloat(mRx, mCanvasWidth, 0, mScale);
-    float ry = PropHelper.fromPercentageToFloat(mRy, mCanvasHeight, 0, mScale);
+    float cx = ParserHelper.fromPercentageToFloat(mCx, mCanvasWidth, 0, mScale);
+    float cy = ParserHelper.fromPercentageToFloat(mCy, mCanvasHeight, 0, mScale);
+    float rx = ParserHelper.fromPercentageToFloat(mRx, mCanvasWidth, 0, mScale);
+    float ry = ParserHelper.fromPercentageToFloat(mRy, mCanvasHeight, 0, mScale);
     RectF oval = new RectF(cx - rx, cy - ry, cx + rx, cy + ry);
     path.addOval(oval, Path.Direction.CW);
     return path;

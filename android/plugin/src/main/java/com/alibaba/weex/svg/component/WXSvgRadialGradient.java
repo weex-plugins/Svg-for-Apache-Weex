@@ -1,6 +1,11 @@
 package com.alibaba.weex.svg.component;
 
-import com.alibaba.weex.svg.PropHelper;
+import android.graphics.Color;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.alibaba.weex.svg.ParserHelper;
+import com.alibaba.weex.svg.SvgBrush;
 import com.alibaba.weex.svg.SvgParser;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.ImmutableDomObject;
@@ -18,19 +23,20 @@ public class WXSvgRadialGradient extends WXSvgDefs {
   public WXSvgRadialGradient(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
     super(instance, dom, parent);
   }
-  private String mCx = "0";
 
-  private String mCy = "0";
+  private String mCx = "50%";
 
-  private String mRx = "1";
+  private String mCy = "50%";
 
-  private String mRy = "0";
+  private String mRx = "50%";
 
-  private String mFx = "1";
+  private String mRy = "50%";
 
-  private String mFy = "0";
+  private String mFx = "50%";
 
-  @WXComponentProp(name = "name")
+  private String mFy = "50%";
+
+  @WXComponentProp(name = "id")
   public void setName(String id) {
     mName = id;
   }
@@ -65,6 +71,12 @@ public class WXSvgRadialGradient extends WXSvgDefs {
     mRy = ry;
   }
 
+  @WXComponentProp(name = "r")
+  public void setR(String r) {
+    mRy = r;
+    mRx = r;
+  }
+
   @Override
   protected void saveDefinition() {
     if (mName != null) {
@@ -81,8 +93,18 @@ public class WXSvgRadialGradient extends WXSvgDefs {
       for (int i = 0; i < childCount(); i++) {
         if (getChild(i) instanceof WXSvgStop) {
           ImmutableDomObject domObject = getChild(i).getDomObject();
-          int color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
-          float offset = Float.parseFloat((String) domObject.getAttrs().get("offset"));
+          int color = Color.TRANSPARENT;
+          String stopColor = (String) domObject.getAttrs().get("stopColor");
+          if (!TextUtils.isEmpty(stopColor) && stopColor.length() > 0) {
+            Log.v("WXSvgRadialGradient", "stop color is " + stopColor);
+            color = SvgParser.parseColor(stopColor);
+          }
+          stopColor = (String) domObject.getStyles().get("stopColor");
+          if (!TextUtils.isEmpty(stopColor) && stopColor.length() > 0) {
+            color = SvgParser.parseColor(stopColor);
+          }
+          float offset = ParserHelper.fromPercentageToFloat(
+              (String) domObject.getAttrs().get("offset"), 1, 0, 1);
           stops.add(offset);
           stopColors.add(color);
         }
@@ -97,7 +119,7 @@ public class WXSvgRadialGradient extends WXSvgDefs {
         positions[i] = stops.get(i);
       }
 
-      PropHelper.RNSVGBrush brush = new PropHelper.RNSVGBrush(PropHelper.RNSVGBrush.GradientType
+      SvgBrush brush = new SvgBrush(SvgBrush.GradientType
           .RADIAL_GRADIENT, points, positions, colors);
       getSvgComponent().defineBrush(brush, mName);
     }

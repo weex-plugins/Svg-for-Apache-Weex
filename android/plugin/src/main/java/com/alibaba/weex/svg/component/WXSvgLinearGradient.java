@@ -1,6 +1,10 @@
 package com.alibaba.weex.svg.component;
 
-import com.alibaba.weex.svg.PropHelper;
+import android.graphics.Color;
+import android.text.TextUtils;
+
+import com.alibaba.weex.svg.ParserHelper;
+import com.alibaba.weex.svg.SvgBrush;
 import com.alibaba.weex.svg.SvgParser;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.ImmutableDomObject;
@@ -15,19 +19,19 @@ import java.util.ArrayList;
  */
 
 public class WXSvgLinearGradient extends WXSvgDefs {
-  private String mX1 = "0";
+  private String mX1 = "0%";
 
-  private String mY1 = "0";
+  private String mY1 = "0%";
 
-  private String mX2 = "1";
+  private String mX2 = "100%";
 
-  private String mY2 = "0";
+  private String mY2 = "0%";
 
   public WXSvgLinearGradient(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
     super(instance, dom, parent);
   }
 
-  @WXComponentProp(name = "name")
+  @WXComponentProp(name = "id")
   public void setName(String id) {
     mName = id;
   }
@@ -66,8 +70,15 @@ public class WXSvgLinearGradient extends WXSvgDefs {
       for (int i = 0; i < childCount(); i++) {
         if (getChild(i) instanceof WXSvgStop) {
           ImmutableDomObject domObject = getChild(i).getDomObject();
-          int color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
-          float offset = Float.parseFloat((String) domObject.getAttrs().get("offset"));
+          int color = Color.TRANSPARENT;
+          if (!TextUtils.isEmpty((CharSequence) domObject.getAttrs().get("stopColor"))) {
+            color = SvgParser.parseColor((String) domObject.getAttrs().get("stopColor"));
+          }
+          if (!TextUtils.isEmpty((CharSequence) domObject.getStyles().get("stopColor"))) {
+            color = SvgParser.parseColor((String) domObject.getStyles().get("stopColor"));
+          }
+          float offset = ParserHelper.fromPercentageToFloat(
+              (String) domObject.getAttrs().get("offset"), 1, 0, 1);
           stops.add(offset);
           stopColors.add(color);
         }
@@ -82,7 +93,7 @@ public class WXSvgLinearGradient extends WXSvgDefs {
         positions[i] = stops.get(i);
       }
 
-      PropHelper.RNSVGBrush brush = new PropHelper.RNSVGBrush(PropHelper.RNSVGBrush.GradientType
+      SvgBrush brush = new SvgBrush(SvgBrush.GradientType
           .LINEAR_GRADIENT, points, positions, colors);
       getSvgComponent().defineBrush(brush, mName);
     }

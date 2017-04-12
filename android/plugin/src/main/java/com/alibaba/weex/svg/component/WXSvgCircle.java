@@ -13,7 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.ParserHelper;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponentProp;
@@ -60,12 +60,12 @@ public class WXSvgCircle extends WXSvgPath {
   @Override
   protected Path getPath(Canvas canvas, Paint paint) {
     Path path = new Path();
-    float cx = PropHelper.fromPercentageToFloat(mCx, mCanvasWidth, 0, mScale);
-    float cy = PropHelper.fromPercentageToFloat(mCy, mCanvasHeight, 0, mScale);
+    float cx = ParserHelper.fromPercentageToFloat(mCx, mCanvasWidth, 0, mScale);
+    float cy = ParserHelper.fromPercentageToFloat(mCy, mCanvasHeight, 0, mScale);
 
     float r;
-    if (PropHelper.isPercentage(mR)) {
-      r = PropHelper.fromPercentageToFloat(mR, 1, 0, 1);
+    if (ParserHelper.isPercentage(mR)) {
+      r = ParserHelper.fromPercentageToFloat(mR, 1, 0, 1);
       float powX = (float) Math.pow((mCanvasWidth * r), 2);
       float powY = (float) Math.pow((mCanvasHeight * r), 2);
       r = (float) Math.sqrt(powX + powY) / (float) Math.sqrt(2);
