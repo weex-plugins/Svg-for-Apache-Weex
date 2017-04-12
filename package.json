@@ -1,5 +1,5 @@
 {
-  "name": "weex-plugin-svg",
+  "name": "weex-svg",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JackPu/weex-plugin-svg.git"
+    "url": "https://github.com/weex-plugins/weex-svg.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JackPu/weex-plugin-svg/issues"
+    "url": "https://github.com/weex-plugins/weex-svg"
   },
-  "homepage": "https://github.com/JackPu/weex-plugin-svg#readme",
+  "homepage": "https://github.com/weex-plugins/weex-svg#readme",
   "devDependencies": {
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",

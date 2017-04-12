@@ -18,13 +18,13 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.alibaba.weex.svg.ISvgDrawable;
-import com.alibaba.weex.svg.PropHelper;
 import com.alibaba.weex.svg.SvgParser;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.Constants;
-import com.taobao.weex.common.WXException;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponent;
 import com.taobao.weex.ui.component.WXComponentProp;
@@ -33,32 +33,40 @@ import com.taobao.weex.ui.component.WXVContainer;
 import com.taobao.weex.ui.view.WXFrameLayout;
 import com.taobao.weex.utils.WXViewUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
-public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
+public class WXSvgAbsComponent extends WXVContainer<FrameLayout> implements ISvgDrawable {
   private static final String TAG = "WXSvgAbsComponent";
 
   protected static final float MIN_OPACITY_FOR_DRAW = 0.01f;
 
   private static final float[] sMatrixData = new float[9];
   private static final float[] sRawMatrix = new float[9];
-  private static final String PATH_TYPE_CLOSE = "Z";
-  private static final String PATH_TYPE_CURVETO = "C";
-  private static final String PATH_TYPE_LINETO = "L";
-  private static final String PATH_TYPE_MOVETO = "M";
+  private static final String PATH_CMD_Z = "Z";
+  private static final String PATH_CMD_C = "C";
+  private static final String PATH_CMD_L = "L";
+  private static final String PATH_CMD_M = "M";
+  private static final String PATH_CMD_H = "H";
+  private static final String PATH_CMD_V = "V";
+  private static final String PATH_CMD_S = "S";
+  private static final String PATH_CMD_A = "A";
 
-  private static final String PATH_TYPE_CLOSE_LOWERCASE = "z";
-  private static final String PATH_TYPE_CURVETO_LOWERCASE = "c";
-  private static final String PATH_TYPE_LINETO_LOWERCASE = "l";
-  private static final String PATH_TYPE_MOVETO_LOWERCASE = "m";
+  private static final String PATH_CMD_CLOSE_LOWERCASE = "z";
+  private static final String PATH_CMD_C_LOWERCASE = "c";
+  private static final String PATH_CMD_L_LOWERCASE = "l";
+  private static final String PATH_CMD_M_LOWERCASE = "m";
+  private static final String PATH_CMD_H_LOWERCASE = "h";
+  private static final String PATH_CMD_V_LOWERCASE = "v";
+  private static final String PATH_CMD_S_LOWERCASE = "s";
+  private static final String PATH_CMD_A_LOWERCASE = "a";
 
   private static final int CLIP_RULE_EVENODD = 0;
   private static final int CLIP_RULE_NONZERO = 1;
-  protected final float mScale;// = 1.0f;
-  protected float mOpacity = 1f;
+  protected float mScale = 1.0f;
+  protected float mOpacity = 1.0f;
   protected Matrix mMatrix = new Matrix();
   protected
   @Nullable
@@ -84,8 +92,14 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
   }
 
   @Override
-  protected WXFrameLayout initComponentHostView(@NonNull Context context) {
-    return new WXFrameLayout(context);
+  protected FrameLayout initComponentHostView(@NonNull Context context) {
+    WXFrameLayout wxFrameLayout = new WXFrameLayout(context);
+    wxFrameLayout.setWillNotDraw(false);
+    return wxFrameLayout;
+  }
+  @Override
+  protected void addSubView(View child, int index) {
+
   }
 
   public void draw(Canvas canvas, Paint paint, float opacity) {
@@ -107,6 +121,9 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
     return count;
   }
 
+  public boolean isVirtualComponent(){
+    return true;
+  }
   /**
    * Restore the canvas after an element was drawn. This is always called in mirror with
    * {@link #saveAndSetupCanvas}.
@@ -210,37 +227,159 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
   }
 
   protected void createPath(ArrayList<SvgParser.PathCmd> cmds, Path path) {
+    float lastX = 0;
+    float lastY = 0;
+    float lastX1 = 0;
+    float lastY1 = 0;
+    float subPathStartX = 0;
+    float subPathStartY = 0;
     path.moveTo(0, 0);
     int i = 0;
 
     while (i < cmds.size()) {
       String cmd = cmds.get(i).mCmd;
       float[] data = cmds.get(i).mValue;
+      boolean wasCurve = false;
       switch (cmd) {
-        case PATH_TYPE_MOVETO:
-        case PATH_TYPE_MOVETO_LOWERCASE:
-          path.moveTo(data[0] * mScale, data[1] * mScale);
+        case PATH_CMD_M:
+        case PATH_CMD_M_LOWERCASE: {
+          float x = data[0] * mScale;
+          float y = data[1] * mScale;
+          if (cmd.equals(PATH_CMD_M_LOWERCASE)) {
+            subPathStartX += x;
+            subPathStartY += y;
+            path.rMoveTo(x, y);
+            lastX += x;
+            lastY += y;
+          } else {
+            subPathStartX = x;
+            subPathStartY = y;
+            path.moveTo(x, y);
+            lastX = x;
+            lastY = y;
+          }
           break;
-        case PATH_TYPE_CLOSE:
-        case PATH_TYPE_CLOSE_LOWERCASE:
+        }
+        case PATH_CMD_Z:
+        case PATH_CMD_CLOSE_LOWERCASE:
           path.close();
+          path.moveTo(subPathStartX, subPathStartY);
+          lastX = subPathStartX;
+          lastY = subPathStartY;
+          lastX1 = subPathStartX;
+          lastY1 = subPathStartY;
+          wasCurve = true;
           break;
-        case PATH_TYPE_LINETO:
-        case PATH_TYPE_LINETO_LOWERCASE:
-          path.lineTo(data[0] * mScale, data[1] * mScale);
+        case PATH_CMD_L:
+        case PATH_CMD_L_LOWERCASE: {
+          float x = data[0] * mScale;
+          float y = data[1] * mScale;
+          if (cmd.equals(PATH_CMD_L_LOWERCASE)) {
+            path.rLineTo(x, y);
+            lastX += x;
+            lastY += y;
+          } else {
+            path.lineTo(x, y);
+            lastX = x;
+            lastY = y;
+          }
           break;
-        case PATH_TYPE_CURVETO:
-        case PATH_TYPE_CURVETO_LOWERCASE:
-          path.cubicTo(
-              data[0] * mScale,
-              data[1] * mScale,
-              data[2] * mScale,
-              data[3] * mScale,
-              data[4] * mScale,
-              data[5] * mScale);
+        }
+        case PATH_CMD_H:
+        case PATH_CMD_H_LOWERCASE: {
+          float x = data[0] * mScale;
+          if (cmd.equals(PATH_CMD_H_LOWERCASE)) {
+            path.rLineTo(x, 0);
+            lastX += x;
+          } else {
+            path.lineTo(x, lastY);
+            lastX = x;
+          }
           break;
+        }
+        case PATH_CMD_V:
+        case PATH_CMD_V_LOWERCASE: {
+          float y = data[0] * mScale;
+          if (cmd.equals(PATH_CMD_V_LOWERCASE)) {
+            path.rLineTo(0, y);
+            lastY += y;
+          } else {
+            path.lineTo(lastX, y);
+            lastY = y;
+          }
+          break;
+        }
+        case PATH_CMD_C:
+        case PATH_CMD_C_LOWERCASE: {
+          wasCurve = true;
+          float x1 = data[0] * mScale;
+          float y1 = data[1] * mScale;
+          float x2 = data[2] * mScale;
+          float y2 = data[3] * mScale;
+          float x = data[4] * mScale;
+          float y = data[5] * mScale;
+          if (cmd.equals(PATH_CMD_C_LOWERCASE)) {
+            x1 += lastX;
+            x2 += lastX;
+            x += lastX;
+            y1 += lastY;
+            y2 += lastY;
+            y += lastY;
+          }
+          path.cubicTo(x1, y1, x2, y2, x, y);
+          lastX1 = x2;
+          lastY1 = y2;
+          lastX = x;
+          lastY = y;
+          break;
+        }
+
+        case PATH_CMD_S:
+        case PATH_CMD_S_LOWERCASE: {
+          wasCurve = true;
+          float x2 = data[0] * mScale;
+          float y2 = data[1] * mScale;
+          float x = data[2] * mScale;
+          float y = data[3] * mScale;
+          if (cmd.equals(PATH_CMD_S_LOWERCASE)) {
+            x2 += lastX;
+            x += lastX;
+            y2 += lastY;
+            y += lastY;
+          }
+          float x1 = 2 * lastX - lastX1;
+          float y1 = 2 * lastY - lastY1;
+          path.cubicTo(x1, y1, x2, y2, x, y);
+          lastX1 = x2;
+          lastY1 = y2;
+          lastX = x;
+          lastY = y;
+          break;
+        }
+        case PATH_CMD_A:
+        case PATH_CMD_A_LOWERCASE: {
+          float rx = data[0] * mScale;
+          float ry = data[1] * mScale;
+          float theta = data[2];
+          int largeArc = (int) (data[3]);
+          int sweepArc = (int) (data[4]);
+          float x = data[5] * mScale;
+          float y = data[6] * mScale;
+          if (cmd.equals(PATH_CMD_A_LOWERCASE)) {
+            x += lastX;
+            y += lastY;
+          }
+          SvgParser.drawArc(path, lastX, lastY, x, y, rx, ry, theta, largeArc, sweepArc);
+          lastX = x;
+          lastY = y;
+          break;
+        }
         default:
           Log.v(TAG, "Unrecognized drawing instruction " + cmd);
+      }
+      if (!wasCurve) {
+        lastX1 = lastX;
+        lastY1 = lastY;
       }
       i++;
     }
@@ -328,6 +467,14 @@ public class WXSvgAbsComponent extends WXDiv implements ISvgDrawable {
         return false;
       default:
         return super.setProperty(key, param);
+    }
+  }
+
+  @Override
+  public void updateProperties(Map<String, Object> props) {
+    super.updateProperties(props);
+    if (getSvgComponent() != null) {
+      getSvgComponent().invalidate();
     }
   }
 }

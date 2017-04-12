@@ -1,7 +1,5 @@
 package com.alibaba.weex.svg;
 
-import java.lang.reflect.Field;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE
  * file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file
@@ -11,9 +9,13 @@ import java.lang.reflect.Field;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Parses numbers from SVG text. Based on the Batik Number Parser (Apache 2 License).
- * 
+ *
  * @author Apache Software Foundation, Larva Labs LLC
  */
 public class ParserHelper {
@@ -28,379 +30,417 @@ public class ParserHelper {
 //		}
 //	}
 
-	private final char[] s;
-	private final int n;
-	private char current;
-	public int pos;
+  private final char[] s;
+  private final int n;
+  private char current;
+  public int pos;
 
-	public ParserHelper(String str, int pos) {
-		try {
-			this.s = str.toCharArray();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		this.pos = pos;
-		n = s.length;
-		current = s[pos];
-	}
+  public ParserHelper(String str, int pos) {
+    try {
+      this.s = str.toCharArray();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    this.pos = pos;
+    n = s.length;
+    current = s[pos];
+  }
 
-	private char read() {
-		if (pos < n) {
-			pos++;
-		}
-		if (pos == n) {
-			return '\0';
-		} else {
-			return s[pos];
-		}
-	}
+  /**
+   * Converts percentage string into actual based on a relative number
+   *
+   * @param percentage percentage string
+   * @param relative   relative number
+   * @param offset     offset number
+   * @return actual float based on relative number
+   */
+  public static float fromPercentageToFloat(String percentage, float relative, float offset, float scale) {
+    Matcher matched = Pattern.compile("^(\\-?\\d+(?:\\.\\d+)?)%$").matcher(percentage);
+    if (matched.matches()) {
+      return Float.valueOf(matched.group(1)) / 100 * relative + offset;
+    } else {
+      return Float.valueOf(percentage) * scale;
+    }
+  }
 
-	public void skipWhitespace() {
-		while (pos < n) {
-			if (Character.isWhitespace(s[pos])) {
-				advance();
-			} else {
-				break;
-			}
-		}
-	}
+  /**
+   * Judge given string is a percentage-like string or not.
+   *
+   * @param string percentage string
+   * @return string is percentage-like or not.
+   */
 
-	public void skipNumberSeparator() {
-		while (pos < n) {
-			char c = s[pos];
-			switch (c) {
-			case ' ':
-			case ',':
-			case '\n':
-			case '\t':
-				advance();
-				break;
-			default:
-				return;
-			}
-		}
-	}
+  public static boolean isPercentage(String string) {
+    Pattern pattern = Pattern.compile("^(\\-?\\d+(?:\\.\\d+)?)%$");
+    return pattern.matcher(string).matches();
+  }
 
-	public void advance() {
-		current = read();
-	}
+  private char read() {
+    if (pos < n) {
+      pos++;
+    }
+    if (pos == n) {
+      return '\0';
+    } else {
+      return s[pos];
+    }
+  }
 
-	/**
-	 * Parses the content of the buffer and converts it to a float.
-	 */
-	public float parseFloat() {
-		int mant = 0;
-		int mantDig = 0;
-		boolean mantPos = true;
-		boolean mantRead = false;
+  public void skipWhitespace() {
+    while (pos < n) {
+      if (Character.isWhitespace(s[pos])) {
+        advance();
+      } else {
+        break;
+      }
+    }
+  }
 
-		int exp = 0;
-		int expDig = 0;
-		int expAdj = 0;
-		boolean expPos = true;
+  public void skipNumberSeparator() {
+    while (pos < n) {
+      char c = s[pos];
+      switch (c) {
+        case ' ':
+        case ',':
+        case '\n':
+        case '\t':
+          advance();
+          break;
+        default:
+          return;
+      }
+    }
+  }
 
-		switch (current) {
-		case '-':
-			mantPos = false;
-			// fallthrough
-		case '+':
-			current = read();
-		}
+  public void advance() {
+    current = read();
+  }
 
-		m1: switch (current) {
-		default:
-			return Float.NaN;
+  /**
+   * Parses the content of the buffer and converts it to a float.
+   */
+  public float parseFloat() {
+    int mant = 0;
+    int mantDig = 0;
+    boolean mantPos = true;
+    boolean mantRead = false;
 
-		case '.':
-			break;
+    int exp = 0;
+    int expDig = 0;
+    int expAdj = 0;
+    boolean expPos = true;
 
-		case '0':
-			mantRead = true;
-			l: for (;;) {
-				current = read();
-				switch (current) {
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-					break l;
-				case '.':
-				case 'e':
-				case 'E':
-					break m1;
-				default:
-					return 0.0f;
-				case '0':
-				}
-			}
+    switch (current) {
+      case '-':
+        mantPos = false;
+        // fallthrough
+      case '+':
+        current = read();
+    }
 
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-			mantRead = true;
-			l: for (;;) {
-				if (mantDig < 9) {
-					mantDig++;
-					mant = mant * 10 + (current - '0');
-				} else {
-					expAdj++;
-				}
-				current = read();
-				switch (current) {
-				default:
-					break l;
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-				}
-			}
-		}
+    m1:
+    switch (current) {
+      default:
+        return Float.NaN;
 
-		if (current == '.') {
-			current = read();
-			m2: switch (current) {
-			default:
-			case 'e':
-			case 'E':
-				if (!mantRead) {
-					reportUnexpectedCharacterError(current);
-					return 0.0f;
-				}
-				break;
+      case '.':
+        break;
 
-			case '0':
-				if (mantDig == 0) {
-					l: for (;;) {
-						current = read();
-						expAdj--;
-						switch (current) {
-						case '1':
-						case '2':
-						case '3':
-						case '4':
-						case '5':
-						case '6':
-						case '7':
-						case '8':
-						case '9':
-							break l;
-						default:
-							if (!mantRead) {
-								return 0.0f;
-							}
-							break m2;
-						case '0':
-						}
-					}
-				}
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-			case '7':
-			case '8':
-			case '9':
-				l: for (;;) {
-					if (mantDig < 9) {
-						mantDig++;
-						mant = mant * 10 + (current - '0');
-						expAdj--;
-					}
-					current = read();
-					switch (current) {
-					default:
-						break l;
-					case '0':
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-					}
-				}
-			}
-		}
+      case '0':
+        mantRead = true;
+        l:
+        for (; ; ) {
+          current = read();
+          switch (current) {
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+              break l;
+            case '.':
+            case 'e':
+            case 'E':
+              break m1;
+            default:
+              return 0.0f;
+            case '0':
+          }
+        }
 
-		switch (current) {
-		case 'e':
-		case 'E':
-			current = read();
-			switch (current) {
-			default:
-				reportUnexpectedCharacterError(current);
-				return 0f;
-			case '-':
-				expPos = false;
-			case '+':
-				current = read();
-				switch (current) {
-				default:
-					reportUnexpectedCharacterError(current);
-					return 0f;
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-				}
-			case '0':
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-			case '7':
-			case '8':
-			case '9':
-			}
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        mantRead = true;
+        l:
+        for (; ; ) {
+          if (mantDig < 9) {
+            mantDig++;
+            mant = mant * 10 + (current - '0');
+          } else {
+            expAdj++;
+          }
+          current = read();
+          switch (current) {
+            default:
+              break l;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+          }
+        }
+    }
 
-			en: switch (current) {
-			case '0':
-				l: for (;;) {
-					current = read();
-					switch (current) {
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-						break l;
-					default:
-						break en;
-					case '0':
-					}
-				}
+    if (current == '.') {
+      current = read();
+      m2:
+      switch (current) {
+        default:
+        case 'e':
+        case 'E':
+          if (!mantRead) {
+            reportUnexpectedCharacterError(current);
+            return 0.0f;
+          }
+          break;
 
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-			case '7':
-			case '8':
-			case '9':
-				l: for (;;) {
-					if (expDig < 3) {
-						expDig++;
-						exp = exp * 10 + (current - '0');
-					}
-					current = read();
-					switch (current) {
-					default:
-						break l;
-					case '0':
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-					}
-				}
-			}
-		default:
-		}
+        case '0':
+          if (mantDig == 0) {
+            l:
+            for (; ; ) {
+              current = read();
+              expAdj--;
+              switch (current) {
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                  break l;
+                default:
+                  if (!mantRead) {
+                    return 0.0f;
+                  }
+                  break m2;
+                case '0':
+              }
+            }
+          }
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+          l:
+          for (; ; ) {
+            if (mantDig < 9) {
+              mantDig++;
+              mant = mant * 10 + (current - '0');
+              expAdj--;
+            }
+            current = read();
+            switch (current) {
+              default:
+                break l;
+              case '0':
+              case '1':
+              case '2':
+              case '3':
+              case '4':
+              case '5':
+              case '6':
+              case '7':
+              case '8':
+              case '9':
+            }
+          }
+      }
+    }
 
-		if (!expPos) {
-			exp = -exp;
-		}
-		exp += expAdj;
-		if (!mantPos) {
-			mant = -mant;
-		}
+    switch (current) {
+      case 'e':
+      case 'E':
+        current = read();
+        switch (current) {
+          default:
+            reportUnexpectedCharacterError(current);
+            return 0f;
+          case '-':
+            expPos = false;
+          case '+':
+            current = read();
+            switch (current) {
+              default:
+                reportUnexpectedCharacterError(current);
+                return 0f;
+              case '0':
+              case '1':
+              case '2':
+              case '3':
+              case '4':
+              case '5':
+              case '6':
+              case '7':
+              case '8':
+              case '9':
+            }
+          case '0':
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
+          case '7':
+          case '8':
+          case '9':
+        }
 
-		return buildFloat(mant, exp);
-	}
+        en:
+        switch (current) {
+          case '0':
+            l:
+            for (; ; ) {
+              current = read();
+              switch (current) {
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                  break l;
+                default:
+                  break en;
+                case '0':
+              }
+            }
 
-	private void reportUnexpectedCharacterError(char c) {
-		throw new RuntimeException("Unexpected char '" + c + "'.");
-	}
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
+          case '7':
+          case '8':
+          case '9':
+            l:
+            for (; ; ) {
+              if (expDig < 3) {
+                expDig++;
+                exp = exp * 10 + (current - '0');
+              }
+              current = read();
+              switch (current) {
+                default:
+                  break l;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+              }
+            }
+        }
+      default:
+    }
 
-	/**
-	 * Computes a float from mantissa and exponent.
-	 */
-	public static float buildFloat(int mant, int exp) {
-		if (exp < -125 || mant == 0) {
-			return 0.0f;
-		}
+    if (!expPos) {
+      exp = -exp;
+    }
+    exp += expAdj;
+    if (!mantPos) {
+      mant = -mant;
+    }
 
-		if (exp >= 128) {
-			return (mant > 0) ? Float.POSITIVE_INFINITY : Float.NEGATIVE_INFINITY;
-		}
+    return buildFloat(mant, exp);
+  }
 
-		if (exp == 0) {
-			return mant;
-		}
+  private void reportUnexpectedCharacterError(char c) {
+    throw new RuntimeException("Unexpected char '" + c + "'.");
+  }
 
-		if (mant >= (1 << 26)) {
-			mant++; // round up trailing bits if they will be dropped.
-		}
+  /**
+   * Computes a float from mantissa and exponent.
+   */
+  public static float buildFloat(int mant, int exp) {
+    if (exp < -125 || mant == 0) {
+      return 0.0f;
+    }
 
-		return (float) ((exp > 0) ? mant * pow10[exp] : mant / pow10[-exp]);
-	}
+    if (exp >= 128) {
+      return (mant > 0) ? Float.POSITIVE_INFINITY : Float.NEGATIVE_INFINITY;
+    }
 
-	/**
-	 * Array of powers of ten. Using double instead of float gives a tiny bit more precision.
-	 */
-	private static final double[] pow10 = new double[128];
+    if (exp == 0) {
+      return mant;
+    }
 
-	static {
-		for (int i = 0; i < pow10.length; i++) {
-			pow10[i] = Math.pow(10, i);
-		}
-	}
+    if (mant >= (1 << 26)) {
+      mant++; // round up trailing bits if they will be dropped.
+    }
 
-	public float nextFloat() {
-		skipWhitespace();
-		float f = parseFloat();
-		skipNumberSeparator();
-		return f;
-	}
+    return (float) ((exp > 0) ? mant * pow10[exp] : mant / pow10[-exp]);
+  }
 
-	public int nextFlag() {
-		skipWhitespace();
-		int flag = current - '0';
-		current = read();
-		skipNumberSeparator();
-		return flag;
-	}
+  /**
+   * Array of powers of ten. Using double instead of float gives a tiny bit more precision.
+   */
+  private static final double[] pow10 = new double[128];
+
+  static {
+    for (int i = 0; i < pow10.length; i++) {
+      pow10[i] = Math.pow(10, i);
+    }
+  }
+
+  public float nextFloat() {
+    skipWhitespace();
+    float f = parseFloat();
+    skipNumberSeparator();
+    return f;
+  }
+
+  public int nextFlag() {
+    skipWhitespace();
+    int flag = current - '0';
+    current = read();
+    skipNumberSeparator();
+    return flag;
+  }
 
 }

@@ -1,5 +1,5 @@
 {
-  "name": "weex-plugin-svg",
+  "name": "weex-svg",
   "version": "0.0.0",
   "description": "Weex Plugin-weex-plugin-svg",
   "scripts": {
@@ -13,5 +13,8 @@
     "handle",
     "weexpack"
   ],
-  "author": ""
+  "author": "",
+  "dependencies": {
+    "color": "^1.0.3"
+  }
 }

@@ -8,14 +8,12 @@ import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.weex.svg.PropHelper;
+import com.alibaba.weex.svg.SvgBrush;
 import com.alibaba.weex.svg.SvgParser;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.dom.WXDomObject;
 import com.taobao.weex.ui.component.WXComponentProp;
 import com.taobao.weex.ui.component.WXVContainer;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -53,23 +51,23 @@ public class WXSvgPath extends WXSvgAbsComponent {
   //private float[] mD;
 //  protected ReadableArray mPropList;// = new WritableNativeArray();
 //  protected WritableArray mOwnedPropList;// = new WritableNativeArray();
-  JSONArray mFill = new JSONArray();
-  private String mFillColor;
-  JSONArray mStroke = new JSONArray();
+  private String mFillColor = "#00ffffff";
   private String mStrokeColor;
   float[] mStrokeDasharray;
   private boolean mFillRuleSet = true;
   private ArrayList<String> mChangedList;
   private ArrayList<Object> mOriginProperties;
+  private WXDomObject mWXDomObject;
 
   public WXSvgPath(WXSDKInstance instance, WXDomObject dom, WXVContainer parent) {
     super(instance, dom, parent);
+    mWXDomObject = dom;
+    Log.v(TAG, "WXSvgPath init " + mWXDomObject.getRef() + " dom attr " + mD);
   }
 
   @WXComponentProp(name = "d")
   public void setPath(@Nullable String shapePath) {
     mD = SvgParser.parserPath(shapePath);
-    Log.v(TAG, "svg path is " + SvgParser.parserPath(shapePath));
     setupPath();
   }
 
@@ -190,7 +188,7 @@ public class WXSvgPath extends WXSvgAbsComponent {
 
   @WXComponentProp(name = "fill")
   public void setFill(String fill) {
-    if (!TextUtils.isEmpty(fill)) {
+    if (!TextUtils.isEmpty(fill) && !fill.equals("none")) {
       mFillColor = fill;
     }
   }
@@ -198,22 +196,23 @@ public class WXSvgPath extends WXSvgAbsComponent {
   @Override
   public void draw(Canvas canvas, Paint paint, float opacity) {
     opacity *= mOpacity;
-
+    Log.v(TAG, "WXSvgPath draw " + mWXDomObject.getRef() + " dom attr " + mD);
     if (opacity > MIN_OPACITY_FOR_DRAW) {
       int count = saveAndSetupCanvas(canvas);
       if (mPath == null) {
         Log.v(TAG, "Paths should have a valid path (d) prop");
       }
 
-      clip(canvas, paint);
+      if (mPath != null) {
+        clip(canvas, paint);
 
-      if (setupFillPaint(paint, opacity * mFillOpacity, null)) {
-        canvas.drawPath(mPath, paint);
+        if (setupFillPaint(paint, opacity * mFillOpacity, null)) {
+          canvas.drawPath(mPath, paint);
+        }
+        if (setupStrokePaint(paint, opacity * mStrokeOpacity, null)) {
+          canvas.drawPath(mPath, paint);
+        }
       }
-      if (setupStrokePaint(paint, opacity * mStrokeOpacity, null)) {
-        canvas.drawPath(mPath, paint);
-      }
-
       restoreCanvas(canvas, count);
       //markUpdateSeen();
     }
@@ -299,35 +298,12 @@ public class WXSvgPath extends WXSvgAbsComponent {
           mPath.computeBounds(box, true);
         }
         String key = colors.substring(colors.indexOf("#") + 1, colors.lastIndexOf(")"));
-        PropHelper.RNSVGBrush brush = getSvgComponent().getDefinedBrush(key);
+        SvgBrush brush = getSvgComponent().getDefinedBrush(key);
         if (brush != null) {
           brush.setupPaint(paint, box, mScale, opacity);
         }
       }
     }
-
-//    int colorType = colors.optInt(0);
-//    if (colorType == 0) {
-      // solid color
-//      paint.setARGB(
-//          (int) (colors.length() > 4 ? colors.optDouble(4) * opacity * 255 : opacity * 255),
-//          (int) (colors.optDouble(1) * 255),
-//          (int) (colors.optDouble(2) * 255),
-////          (int) (colors.optDouble(3) * 255));
-//    } else if (colorType == 1) {
-//      if (box == null) {
-//        box = new RectF();
-//        mPath.computeBounds(box, true);
-//      }
-//      PropHelper.RNSVGBrush brush = getSvgComponent().getDefinedBrush(colors.optString(1));
-//      if (brush != null) {
-//        brush.setupPaint(paint, box, mScale, opacity);
-//      }
-//    } else {
-//      // TODO: Support pattern.
-//      Log.w(TAG, "RNSVG: Color type " + colorType + " not supported!");
-//    }
-
   }
 
   private static class NumberParse {
