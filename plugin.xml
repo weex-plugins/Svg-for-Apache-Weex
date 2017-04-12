@@ -17,7 +17,7 @@
   specific language governing permissions and limitations
   under the License.
 -->
-<plugin id="weex-plugin-svg"
+<plugin id="weex-svg"
         version="0.1.0"
         xmlns="http://www.w3.org/ns/widgets">
     <name>weex-svg</name>
