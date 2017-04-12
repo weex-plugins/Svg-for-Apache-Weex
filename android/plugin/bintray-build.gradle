@@ -107,7 +107,7 @@ dependencies {
         exclude module: 'commons-logging'
         exclude module: 'httpclient'
     }
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    provided 'com.android.support:appcompat-v7:23.1.1'
     provided 'com.google.code.findbugs:jsr305:3.0.0'
     provided 'com.taobao.android:weex_sdk:0.10.0'
 }
