@@ -20,7 +20,7 @@
 <plugin id="weex-plugin-svg"
         version="0.1.0"
         xmlns="http://www.w3.org/ns/widgets">
-    <name>weex-plugin-svg</name>
+    <name>weex-svg</name>
     <description></description>
     <license>Apache 2.0</license>
     <keywords>weex,plugin</keywords>
