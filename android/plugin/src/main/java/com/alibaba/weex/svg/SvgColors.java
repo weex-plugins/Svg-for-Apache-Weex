@@ -160,6 +160,7 @@ public class SvgColors {
 		colors.put("whitesmoke", 0xfff5f5f5);
 		colors.put("yellow", 0xffffff00);
 		colors.put("yellowgreen", 0xff9acd32);
+		colors.put("transparent", 0x00FFFFFF);
 		COLOURS = Collections.unmodifiableMap(colors);
 	}
 }
